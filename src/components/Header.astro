@@ -114,6 +114,9 @@ const isActive = (item: typeof nav[number]) =>
     opacity: 0; visibility: hidden; transition: opacity 0.25s ease, transform 0.25s ease;
     z-index: 60;
   }
+  /* transparent bridge across the 10px gap so the pointer can travel from
+     the trigger onto the panel without losing :hover (no premature close) */
+  .nav-dd-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 16px; }
   .nav-dd:hover .nav-dd-panel,
   .nav-dd:focus-within .nav-dd-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
   .nav-dd:hover .nav-dd-chev { transform: rotate(180deg); }
@@ -126,77 +129,82 @@ const isActive = (item: typeof nav[number]) =>
   .nav-dd-chev { transition: transform 0.3s ease; }
 </style>
 
-<script>
-  const toggle = document.getElementById('menu-toggle');
-  const menu = document.getElementById('mobile-menu');
-  const shell = document.getElementById('nav-shell');
-  const burger = toggle?.querySelector('.hamburger');
+<!-- is:inline so the menu toggle attaches at parse time (no module-load race; the first tap always works) -->
+<script is:inline>
+  (function () {
+    var toggle = document.getElementById('menu-toggle');
+    var menu = document.getElementById('mobile-menu');
+    var shell = document.getElementById('nav-shell');
+    var header = document.getElementById('site-header');
+    var burger = toggle ? toggle.querySelector('.hamburger') : null;
 
-  toggle?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden');
-    menu?.classList.toggle('hidden');
-    burger?.classList.toggle('open', !isOpen);
-    toggle?.setAttribute('aria-expanded', (!isOpen).toString());
-    toggle?.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
-  });
-  menu?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', () => {
-      menu.classList.add('hidden');
-      burger?.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
-    })
-  );
-
-  // Nav strengthen / shrink on scroll
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      if (shell) {
-        if (y > 30) {
-          shell.style.background = 'rgba(255,255,255,0.92)';
-          shell.style.transform = 'scale(0.985)';
-        } else {
-          shell.style.background = 'rgba(255,255,255,0.82)';
-          shell.style.transform = 'scale(1)';
-        }
+    function isOpen() { return menu && !menu.classList.contains('hidden'); }
+    function setOpen(open) {
+      if (!menu) return;
+      menu.classList.toggle('hidden', !open);
+      if (burger) burger.classList.toggle('open', open);
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       }
-      ticking = false;
-    });
-  });
-
-  // Live open/closed status — Mon–Fri 08:30–17:30, Sat 08:30–12:30, Sun closed.
-  // Updates on load and every 60s (per brief). Styled CSS dots, no emoji.
-  function updateStatus() {
-    const dot = document.getElementById('live-dot');
-    const text = document.getElementById('live-text');
-    if (!dot || !text) return;
-    const now = new Date();
-    const day = now.getDay(); // 0 Sun … 6 Sat
-    const mins = now.getHours() * 60 + now.getMinutes();
-    const OPEN = 8 * 60 + 30;
-    const CLOSE_WK = 17 * 60 + 30;
-    const CLOSE_SAT = 12 * 60 + 30;
-
-    let open = false;
-    let msg = '';
-    if (day === 0) {
-      msg = 'Closed · Opens Monday 8:30am';
-    } else if (day === 6) {
-      if (mins < OPEN) msg = 'Opens 8:30am today';
-      else if (mins < CLOSE_SAT) { open = true; msg = 'Open now · Closes 12:30pm'; }
-      else msg = 'Closed · Opens Monday 8:30am';
-    } else {
-      if (mins < OPEN) msg = 'Opens 8:30am today';
-      else if (mins < CLOSE_WK) { open = true; msg = 'Open now · Closes 5:30pm'; }
-      else if (day === 5) msg = 'Closed · Opens Saturday 8:30am';
-      else msg = 'Closed · Opens 8:30am tomorrow';
+      document.body.style.overflow = open ? 'hidden' : '';
     }
-    text.textContent = msg;
-    dot.className = open ? 'status-dot status-dot-open' : 'status-dot status-dot-closed';
-  }
-  updateStatus();
-  setInterval(updateStatus, 60000);
+
+    if (toggle) {
+      toggle.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!isOpen()); });
+    }
+    if (menu) {
+      menu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setOpen(false); });
+      });
+    }
+    // Close on Escape, on tap outside the header, and when resized up to desktop.
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+    document.addEventListener('click', function (e) { if (isOpen() && header && !header.contains(e.target)) setOpen(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth >= 1024 && isOpen()) setOpen(false); });
+
+    // Nav strengthen / shrink on scroll
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY;
+        if (shell) {
+          if (y > 30) { shell.style.background = 'rgba(255,255,255,0.92)'; shell.style.transform = 'scale(0.985)'; }
+          else { shell.style.background = 'rgba(255,255,255,0.82)'; shell.style.transform = 'scale(1)'; }
+        }
+        ticking = false;
+      });
+    });
+
+    // Live open/closed status — Mon–Fri 08:30–17:30, Sat 08:30–12:30, Sun closed.
+    // Updates on load and every 60s (per brief). Styled CSS dots, no emoji.
+    function updateStatus() {
+      var dot = document.getElementById('live-dot');
+      var text = document.getElementById('live-text');
+      if (!dot || !text) return;
+      var now = new Date();
+      var day = now.getDay();
+      var mins = now.getHours() * 60 + now.getMinutes();
+      var OPEN = 8 * 60 + 30, CLOSE_WK = 17 * 60 + 30, CLOSE_SAT = 12 * 60 + 30;
+      var open = false, msg = '';
+      if (day === 0) {
+        msg = 'Closed · Opens Monday 8:30am';
+      } else if (day === 6) {
+        if (mins < OPEN) msg = 'Opens 8:30am today';
+        else if (mins < CLOSE_SAT) { open = true; msg = 'Open now · Closes 12:30pm'; }
+        else msg = 'Closed · Opens Monday 8:30am';
+      } else {
+        if (mins < OPEN) msg = 'Opens 8:30am today';
+        else if (mins < CLOSE_WK) { open = true; msg = 'Open now · Closes 5:30pm'; }
+        else if (day === 5) msg = 'Closed · Opens Saturday 8:30am';
+        else msg = 'Closed · Opens 8:30am tomorrow';
+      }
+      text.textContent = msg;
+      dot.className = open ? 'status-dot status-dot-open' : 'status-dot status-dot-closed';
+    }
+    updateStatus();
+    setInterval(updateStatus, 60000);
+  })();
 </script>
