@@ -1,0 +1,248 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import PartCard from '../components/PartCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import MapBlock from '../components/MapBlock.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, telMobile, whatsappLink, featuredBrands, allBrands, trustSignals } from '../data/site';
+import { services } from '../data/services';
+import { partCategories, featuredProducts, productImage } from '../data/parts';
+import { whyChooseUs, whyIntro } from '../data/content';
+
+const heroProduct = featuredProducts[0]; // VW Golf 8 R-Line front bumper
+const heroStats = [
+  { value: site.stats.yearsExperience, suffix: '+', label: 'Years in the trade' },
+  { value: site.stats.productsSold, suffix: '+', label: 'Products sold' },
+  { value: site.stats.listings, suffix: '+', label: 'Parts listed' },
+  { value: null, display: site.rating.positive, label: 'Positive feedback' },
+];
+const fmt = (n: number) => n.toLocaleString('en-GB');
+---
+
+<Layout
+  current="/"
+  title="Major Car Parts | Car Parts + Fitting + Body Repair Chadwell Heath London"
+  description="Genuine car parts in Chadwell Heath for Lexus, Mercedes, BMW, Audi, Tesla, Range Rover and Ford — plus in-house fitting, body repair and spray paint."
+>
+  <!-- ════════ HERO ════════ -->
+  <section class="relative min-h-[100svh] flex flex-col overflow-hidden bg-navy-deep">
+    <img src="/images/workshop-engine.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" style="animation: kenburns 34s ease-in-out infinite alternate;" loading="eager" fetchpriority="high" />
+    <div class="absolute inset-0 hero-overlay"></div>
+    <div class="absolute inset-0 hero-mesh opacity-70"></div>
+    <div class="glow-orb" style="width: 460px; height: 460px; top: 8%; left: -130px; background: #FF5500; opacity: 0.22;"></div>
+    <div class="glow-orb" style="width: 400px; height: 400px; bottom: 6%; right: -110px; background: #15529E; opacity: 0.4;"></div>
+
+    <div class="relative z-10 flex-1 flex items-center pt-32 pb-12 md:pt-40 md:pb-20">
+      <div class="container-mcp w-full">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7">
+            <div class="flex flex-wrap items-center gap-2 mb-7 fade-in">
+              <span class="pill pill-dark pill-dot">Car Parts + Fitting + Body Repair · Chadwell Heath, London</span>
+            </div>
+            <h1 class="heading-display text-white hero-text-shadow text-balance mb-5 fade-in stagger-1">
+              Your one-stop <span class="text-orange">automotive</span> solution.
+            </h1>
+            <p class="text-lg md:text-xl text-white/80 hero-text-shadow max-w-2xl leading-relaxed mb-8 text-pretty fade-in stagger-2">
+              Genuine and quality parts for Lexus, Mercedes-Benz, BMW, Audi, Tesla, Range Rover, Ford and many more — with in-house fitting, body repair and spray paint. East London, with over 15 years in the trade.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 mb-8 fade-in stagger-3">
+              <a href="/contact" class="btn btn-primary btn-lg">
+                Get a Parts Quote
+                <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+              </a>
+              <a href={telLandline} class="btn btn-glass btn-lg">
+                <Icon name="Phone" size={17} strokeWidth={2.3} />
+                Call {site.phoneLandline}
+              </a>
+            </div>
+            <div class="flex flex-wrap gap-2.5 fade-in stagger-4">
+              {trustSignals.map((t) => (
+                <span class="pill pill-dark">
+                  <Icon name="Check" size={13} strokeWidth={3} class="text-orange-bright" />
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Floating featured-part card -->
+          <div class="lg:col-span-5 fade-in stagger-3 hidden lg:block">
+            <div class="glass rounded-[1.75rem] p-5 text-white max-w-sm ml-auto">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[0.62rem] uppercase tracking-[0.2em] text-orange-bright font-mono">Featured part</span>
+                <span class="pill pill-dark !py-1 !px-2.5 !text-[0.62rem]">{heroProduct.brand}</span>
+              </div>
+              <div class="rounded-2xl overflow-hidden mb-4 bg-white/95">
+                <img src={productImage(heroProduct)} alt={heroProduct.title} width="640" height="480" class="w-full aspect-[4/3] object-cover" loading="eager" />
+              </div>
+              <p class="text-[0.95rem] font-semibold leading-snug mb-3 text-white">{heroProduct.title}</p>
+              <a href={whatsappLink} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold text-orange-bright">
+                <Icon name="MessageCircle" size={15} strokeWidth={2.2} />
+                Enquire about this part
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero stat bar -->
+    <div class="relative z-10 pb-7 md:pb-9">
+      <div class="container-mcp">
+        <div class="glass rounded-3xl grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 overflow-hidden fade-in">
+          {heroStats.map((s) => (
+            <div class="px-5 py-5 md:px-7 md:py-6">
+              <p class="text-2xl md:text-4xl font-black text-white stat-num">
+                {s.value !== null
+                  ? <span data-count={s.value} data-suffix={s.suffix}>{fmt(s.value)}{s.suffix}</span>
+                  : <span>{s.display}</span>}
+              </p>
+              <p class="text-[0.62rem] md:text-[0.7rem] text-white/65 uppercase tracking-widest mt-1.5 font-mono">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <BrandStrip brands={featuredBrands} dark={true} />
+
+  <!-- ════════ EDITORIAL INTRO ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="relative fade-in">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img src="/images/stock/garage-2.jpg" alt="Our team fitting parts in the workshop" width="1000" height="1200" class="w-full aspect-[4/5] object-cover" loading="lazy" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.45) 100%);"></div>
+          </div>
+          <div class="absolute -bottom-6 -right-2 md:right-6 glass-light rounded-2xl px-6 py-5 max-w-[15rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="big-number text-ink" style="font-size: clamp(2rem,5vw,2.75rem);"><span data-count={site.stats.yearsExperience} data-suffix="+">{site.stats.yearsExperience}+</span></p>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-muted mt-1 font-mono">Years in the automotive trade</p>
+          </div>
+        </div>
+        <div class="fade-in stagger-1">
+          <span class="eyebrow mb-5">Parts &amp; workshop, under one roof</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Most suppliers sell you the part. We fit it, repair it and paint it too.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-7 text-pretty">{whyIntro}</p>
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            {trustSignals.map((t) => (
+              <div class="flex items-center gap-2.5 text-ink">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                <span class="font-medium text-[0.95rem]">{t}</span>
+              </div>
+            ))}
+          </div>
+          <a href="/about" class="arrow-link">More about Major Car Parts</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SERVICES ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="What we do"
+        title="Everything your vehicle needs, in one place."
+        intro="Four ways we keep you moving — supply the part, fit it, repair the bodywork and refinish it. One team, one trip, one bill."
+        ctaHref="/services"
+        ctaLabel="All Services"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        {services.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PARTS WE STOCK ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="The parts counter"
+        title="What we stock."
+        intro="Genuine and quality parts across the ranges that keep cars on the road — for premium and mainstream makes alike."
+        ctaHref="/parts"
+        ctaLabel="Browse all parts"
+      />
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-12">
+        {partCategories.map((c, i) => <CategoryCard category={c} index={i} />)}
+      </div>
+
+      <div class="mt-16">
+        <h3 class="text-center text-[0.72rem] uppercase tracking-[0.2em] text-muted font-mono mb-8 fade-in">Recently listed — real parts in stock</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {featuredProducts.map((p, i) => <PartCard product={p} index={i} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WHY CHOOSE US ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">The Major Car Parts difference</span>
+        <h2 class="heading-lg text-balance mt-1">Six reasons trade and private customers choose us.</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        {whyChooseUs.map((w, i) => (
+          <div class={`card-feature group fade-in stagger-${(i % 3) + 1}`}>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name={w.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-ink mb-1.5 leading-snug">{w.title}</h3>
+            <p class="text-[0.8rem] font-semibold uppercase tracking-wide text-orange-deep mb-3 font-mono">{w.subtitle}</p>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{w.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PROCESS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">How it works</span>
+        <h2 class="heading-lg text-balance mt-1">From enquiry to back on the road.</h2>
+      </div>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <!-- ════════ VEHICLE COVERAGE ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; bottom: -150px; right: -100px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-12 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">Vehicle coverage</span>
+        <h2 class="heading-lg text-white text-balance mt-1">Parts for the makes you drive.</h2>
+        <p class="text-lg text-white/70 mt-4 text-pretty">From premium marques like Tesla and Range Rover to everyday Fords and Volkswagens — and many more brands available on request.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2.5 md:gap-3 max-w-4xl mx-auto fade-in stagger-1">
+        {allBrands.map((b) => (
+          <span class="pill pill-dark !text-[0.8rem] !tracking-normal !normal-case !font-semibold">{b}</span>
+        ))}
+        <a href="/brands" class="pill pill-orange !text-[0.8rem] !tracking-normal !normal-case !font-semibold">and many more <Icon name="ArrowRight" size={13} strokeWidth={2.6} /></a>
+      </div>
+    </div>
+  </section>
+
+  <ReviewsSection dark={true} />
+
+  <!-- ════════ FIND US ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <MapBlock />
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

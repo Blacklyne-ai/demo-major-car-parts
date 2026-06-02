@@ -1,0 +1,317 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, mailLink, telLandline } from '../data/site';
+
+const lastUpdated = '2 June 2026';
+
+// In-page navigation — mirrors the h2 sections below.
+const sections = [
+  { id: 'what-are-cookies', label: 'What are cookies' },
+  { id: 'how-we-use', label: 'How we use cookies' },
+  { id: 'cookies-we-use', label: 'The cookies we use' },
+  { id: 'managing', label: 'Managing cookies' },
+  { id: 'third-party', label: 'Third-party content' },
+  { id: 'changes', label: 'Changes to this policy' },
+  { id: 'contact', label: 'Contact' },
+];
+
+// Plain-English summary tiles shown above the formal text.
+const quickFacts = [
+  {
+    icon: 'ShieldCheck',
+    title: 'No tracking by default',
+    body: 'We set no advertising or tracking cookies. Only essential cookies run unless you tell us otherwise.',
+  },
+  {
+    icon: 'Check',
+    title: 'Analytics on consent only',
+    body: 'Optional analytics cookies are used solely if you accept them in our banner. Reject and they stay off.',
+  },
+  {
+    icon: 'Settings',
+    title: 'You stay in control',
+    body: 'Change your mind any time using the banner, or clear cookies through your own browser settings.',
+  },
+];
+
+// The cookies this site may set. Honest and accurate to the build.
+const cookieRows = [
+  {
+    name: 'mcp-cookie-consent',
+    type: 'Essential',
+    storage: 'localStorage (your browser)',
+    purpose: 'Remembers whether you accepted or rejected cookies so the banner does not reappear on every visit.',
+    duration: 'Until you clear it',
+    consent: false,
+  },
+  {
+    name: 'Analytics',
+    type: 'Optional',
+    storage: 'Only set if you accept',
+    purpose: 'Helps us understand how the site is used — which pages are visited and how visitors find us — so we can improve it.',
+    duration: 'Only while consent is given',
+    consent: true,
+  },
+];
+---
+
+<Layout
+  current="/cookie-policy"
+  title="Cookie Policy | Major Car Parts"
+  description="How Major Car Parts uses cookies and similar technologies, and how you can manage your preferences under UK PECR and GDPR."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Cookie Policy"
+    subtitle="How Major Car Parts uses cookies and similar technologies — and how you stay in control of them — under UK PECR and the UK GDPR."
+    crumb="Cookie Policy"
+  />
+
+  <!-- ════════ QUICK FACTS ════════ -->
+  <section class="py-20 md:py-24 bg-white">
+    <div class="container-mcp">
+      <div class="flex flex-wrap items-center gap-2.5 mb-10 fade-in">
+        <span class="pill pill-light pill-dot">Last updated {lastUpdated}</span>
+        <span class="pill pill-light">
+          <Icon name="Shield" size={13} strokeWidth={2.2} class="text-orange-deep" />
+          UK PECR &amp; GDPR
+        </span>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+        {quickFacts.map((f, i) => (
+          <div class={`card-feature fade-in stagger-${i + 1}`}>
+            <div class="w-13 h-13 rounded-2xl flex items-center justify-center mb-5" style="width: 3.25rem; height: 3.25rem; background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name={f.icon} size={22} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{f.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ POLICY BODY ════════ -->
+  <section class="py-20 md:py-24 section-snow">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+        <!-- Sticky in-page nav -->
+        <aside class="lg:col-span-4 xl:col-span-3">
+          <div class="lg:sticky lg:top-28 fade-in">
+            <div class="card p-6">
+              <p class="text-[0.7rem] uppercase tracking-[0.18em] text-muted font-mono mb-4">On this page</p>
+              <nav class="flex flex-col gap-1" aria-label="Cookie policy sections">
+                {sections.map((s, i) => (
+                  <a href={`#${s.id}`} class="group flex items-center gap-2.5 py-2 text-[0.92rem] text-muted hover:text-orange-deep transition-colors">
+                    <span class="font-mono text-[0.72rem] text-orange-deep/70 group-hover:text-orange-deep">{String(i + 1).padStart(2, '0')}</span>
+                    <span class="font-medium">{s.label}</span>
+                  </a>
+                ))}
+              </nav>
+              <div class="divider-orange my-6"></div>
+              <p class="text-[0.82rem] text-muted leading-relaxed mb-3">Prefer the bigger picture? See how we handle your data.</p>
+              <a href="/privacy-policy" class="arrow-link !text-[0.9rem]">Read our Privacy Policy</a>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Prose -->
+        <div class="lg:col-span-8 xl:col-span-9">
+          <div class="card p-7 md:p-12 fade-in stagger-1">
+            <div class="legal-prose">
+              <p class="!text-[1.05rem] !text-ink">
+                This Cookie Policy explains how <strong>{site.name}</strong> uses cookies and similar
+                technologies on this website, why we use them, and the choices you have. It should be
+                read alongside our <a href="/privacy-policy">Privacy Policy</a>. We comply with the
+                Privacy and Electronic Communications Regulations (PECR) and the UK GDPR.
+              </p>
+
+              <h2 id="what-are-cookies">1. What are cookies</h2>
+              <p>
+                Cookies are small text files that a website can place on your device (computer, tablet
+                or phone) when you visit. They are widely used to make websites work, to remember your
+                choices, and to provide information to the people who run the site. We also use the term
+                loosely here to cover similar technologies such as your browser&rsquo;s
+                <strong>localStorage</strong>, which stores small pieces of data in the same way.
+              </p>
+              <p>
+                Cookies are usually grouped by how essential they are. <strong>Essential</strong> (or
+                &ldquo;strictly necessary&rdquo;) cookies are needed for the site to function and do not
+                require your consent. <strong>Optional</strong> cookies — such as those used for
+                analytics — are only set with your permission.
+              </p>
+
+              <h2 id="how-we-use">2. How we use cookies</h2>
+              <p>
+                Major Car Parts is a parts supply and in-house fitting, body repair and spray paint
+                business — not an advertising company. We keep our use of cookies deliberately minimal:
+              </p>
+              <ul>
+                <li>
+                  <strong>Essential cookies, by default.</strong> A small number of essential cookies and
+                  similar storage are used to make the website work — for example, to remember your cookie
+                  choice so we do not ask you again on every page. These run without consent because the
+                  site cannot function properly without them.
+                </li>
+                <li>
+                  <strong>Analytics cookies, only with consent.</strong> We may use analytics cookies to
+                  understand how visitors use the site, so we can improve it. These are
+                  <strong> only</strong> set if you actively accept them through our cookie banner. If you
+                  reject, or simply ignore the banner, no analytics cookies are placed.
+                </li>
+              </ul>
+              <p>
+                We do <strong>not</strong> use cookies for advertising, profiling or to sell your data,
+                and we do not share cookie data with advertisers.
+              </p>
+
+              <h2 id="cookies-we-use">3. The cookies we use</h2>
+              <p>
+                The table below sets out the cookies and similar technologies this website may use. As a
+                small, parts-focused site, the list is short and we keep it honest.
+              </p>
+
+              <!-- Desktop / tablet table -->
+              <div class="not-prose hidden sm:block my-7 overflow-hidden rounded-2xl border border-line">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-navy text-white">
+                      <th class="px-5 py-3.5 text-[0.72rem] uppercase tracking-[0.12em] font-mono font-semibold">Name</th>
+                      <th class="px-5 py-3.5 text-[0.72rem] uppercase tracking-[0.12em] font-mono font-semibold">Type</th>
+                      <th class="px-5 py-3.5 text-[0.72rem] uppercase tracking-[0.12em] font-mono font-semibold">Purpose</th>
+                      <th class="px-5 py-3.5 text-[0.72rem] uppercase tracking-[0.12em] font-mono font-semibold whitespace-nowrap">Set when</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cookieRows.map((c) => (
+                      <tr class="bg-white border-t border-line align-top">
+                        <td class="px-5 py-4">
+                          <span class="font-mono text-[0.82rem] font-semibold text-ink break-all">{c.name}</span>
+                          <span class="block text-[0.76rem] text-muted-light mt-1">{c.storage}</span>
+                        </td>
+                        <td class="px-5 py-4">
+                          <span class={`pill ${c.consent ? 'pill-orange' : 'pill-light'} !text-[0.68rem] !py-1 !px-2.5`}>{c.type}</span>
+                        </td>
+                        <td class="px-5 py-4 text-[0.88rem] text-muted leading-relaxed">{c.purpose}</td>
+                        <td class="px-5 py-4 text-[0.84rem] text-muted whitespace-nowrap">{c.duration}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Mobile stacked cards -->
+              <div class="not-prose sm:hidden my-7 flex flex-col gap-3.5">
+                {cookieRows.map((c) => (
+                  <div class="rounded-2xl border border-line bg-white p-5">
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                      <span class="font-mono text-[0.82rem] font-semibold text-ink break-all">{c.name}</span>
+                      <span class={`pill ${c.consent ? 'pill-orange' : 'pill-light'} !text-[0.66rem] !py-1 !px-2.5 flex-shrink-0`}>{c.type}</span>
+                    </div>
+                    <p class="text-[0.88rem] text-muted leading-relaxed mb-3">{c.purpose}</p>
+                    <div class="spec-row !py-2"><span class="spec-label !text-[0.8rem]">Stored in</span><span class="spec-value !text-[0.8rem] text-right">{c.storage}</span></div>
+                    <div class="spec-row !py-2"><span class="spec-label !text-[0.8rem]">Set when</span><span class="spec-value !text-[0.8rem] text-right">{c.duration}</span></div>
+                  </div>
+                ))}
+              </div>
+
+              <p>
+                Your cookie choice is recorded against the key <strong>mcp-cookie-consent</strong> in your
+                browser&rsquo;s localStorage. It simply holds whether you accepted or rejected — it does
+                not identify you and is never sent to advertisers.
+              </p>
+
+              <h2 id="managing">4. Managing cookies</h2>
+              <p>You can manage cookies on this site in two ways:</p>
+              <ul>
+                <li>
+                  <strong>Use our cookie banner.</strong> When you first visit, a banner lets you
+                  <strong> Accept all</strong> or <strong>Reject</strong>. Choosing Reject means no optional
+                  analytics cookies are set; only essential cookies remain. Your choice is remembered for
+                  next time.
+                </li>
+                <li>
+                  <strong>Change your mind.</strong> To review or reset your choice, clear this site&rsquo;s
+                  stored data in your browser settings (which removes the
+                  <strong> mcp-cookie-consent</strong> key). The banner will then appear again on your next
+                  visit so you can choose afresh.
+                </li>
+                <li>
+                  <strong>Use your browser controls.</strong> Most browsers let you block or delete cookies
+                  and clear local storage through their settings or privacy menu. Help for the main
+                  browsers — Chrome, Safari, Firefox and Edge — is available within each browser&rsquo;s own
+                  support pages.
+                </li>
+              </ul>
+              <p>
+                Please note that blocking essential cookies or storage may stop parts of the site from
+                working as intended — for example, the cookie banner may keep reappearing.
+              </p>
+
+              <h2 id="third-party">5. Third-party content</h2>
+              <p>
+                Some pages embed content provided by third parties, which may set their own cookies when
+                that content loads:
+              </p>
+              <ul>
+                <li>
+                  <strong>Google Maps.</strong> Our Contact page includes an embedded Google Map so you can
+                  find our unit on Chadwell Heath Industrial Park. When the map loads, Google may set
+                  cookies on your device. These are controlled by Google under its own privacy and cookie
+                  policies, not by us.
+                </li>
+                <li>
+                  <strong>Outbound links.</strong> We link out to services such as our eBay store and to
+                  WhatsApp for enquiries. If you follow those links, the cookies and data practices of those
+                  third parties apply once you leave our site.
+                </li>
+              </ul>
+              <p>
+                We do not control third-party cookies and recommend reviewing the relevant provider&rsquo;s
+                policy if you have concerns about them.
+              </p>
+
+              <h2 id="changes">6. Changes to this policy</h2>
+              <p>
+                We may update this Cookie Policy from time to time to reflect changes to the cookies we use
+                or to legal requirements. When we do, we will revise the &ldquo;last updated&rdquo; date at
+                the top and bottom of this page. We encourage you to check back occasionally. Significant
+                changes affecting optional cookies may also be reflected in our cookie banner.
+              </p>
+
+              <h2 id="contact">7. Contact</h2>
+              <p>
+                If you have any questions about this Cookie Policy or how we use cookies, please get in
+                touch:
+              </p>
+              <ul>
+                <li><strong>Email:</strong> <a href={mailLink}>{site.email}</a></li>
+                <li><strong>Phone:</strong> <a href={telLandline}>{site.phoneLandline}</a> (office &amp; trade)</li>
+                <li>
+                  <strong>Post:</strong> {site.name}, {site.address.unit}, {site.address.estate},
+                  {' '}{site.address.street}, {site.address.area}, {site.address.city},
+                  {' '}{site.address.region} {site.address.postcode}
+                </li>
+              </ul>
+              <p class="!mb-0 text-[0.92rem] text-muted-light">Last updated {lastUpdated}.</p>
+            </div>
+
+            <!-- Footer actions within the card -->
+            <div class="not-prose mt-9 pt-8 border-t border-line flex flex-col sm:flex-row gap-3">
+              <a href="/privacy-policy" class="btn btn-navy">
+                <Icon name="Shield" size={16} strokeWidth={2.2} />
+                Privacy Policy
+              </a>
+              <a href="/contact" class="btn btn-outline">
+                <Icon name="Mail" size={16} strokeWidth={2.2} />
+                Contact us
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

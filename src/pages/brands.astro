@@ -1,0 +1,202 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, whatsappLink, featuredBrands, allBrands, comingSoonBrands } from '../data/site';
+import { productsByBrand, productImage } from '../data/parts';
+
+// 9-cell display grid (multiple of 3): the 7 headline brands plus
+// Volkswagen and Toyota, which we clearly stock (real product photos).
+const displayBrands = [...featuredBrands, 'Volkswagen', 'Toyota'];
+
+// Common exterior parts line shared across brand cards.
+const commonParts = 'Bumpers, bonnets, wings, lighting, grilles and trims';
+
+// How many real listings we currently hold per make (for a subtle stat).
+const brandStockCount = (brand: string) => productsByBrand(brand).length;
+---
+
+<Layout
+  current="/brands"
+  title="Brands We Stock — Lexus, Mercedes, BMW, Audi, Tesla, Range Rover, Ford | Major Car Parts"
+  description="Car parts for Lexus, Mercedes-Benz, BMW, Audi, Tesla, Range Rover, Ford and many more — premium and mainstream makes. Chadwell Heath. Call 020 3592 1629."
+>
+  <PageHero
+    eyebrow="Multi-brand coverage"
+    title="Parts for the makes you drive."
+    subtitle="From premium marques like Tesla and Range Rover to everyday Fords, Volkswagens and Toyotas — we stock and source genuine and quality parts across a wide range of makes. Can't see yours? Just ask."
+    crumb="Brands"
+    primary={{ href: '/contact', label: 'Request a part' }}
+    secondary={{ href: '/parts', label: 'Browse parts' }}
+  />
+
+  <!-- ════════ FEATURED BRANDS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Brands we stock"
+        title="Genuine and quality parts, make by make."
+        intro="A snapshot of the marques we work with most. Each one is backed by real listings, in-house fitting and our parts-sourcing network — premium and mainstream alike."
+        ctaHref="/parts"
+        ctaLabel="Browse all parts"
+      />
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        {displayBrands.map((brand, i) => {
+          const stock = productsByBrand(brand);
+          const hasPhoto = stock.length > 0;
+          return (
+            <article class={`card group flex flex-col h-full !p-0 overflow-hidden fade-in stagger-${(i % 3) + 1}`}>
+              <!-- Visual: real product photo, or a styled navy icon tile -->
+              {hasPhoto ? (
+                <div class="relative aspect-[5/3] overflow-hidden bg-snow">
+                  <img
+                    src={productImage(stock[0])}
+                    alt={`${brand} part in stock — ${stock[0].title}`}
+                    width="640"
+                    height="384"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.42) 100%);"></div>
+                  <span class="absolute top-3 left-3 pill pill-light !py-1 !px-2.5 !text-[0.62rem]">In stock now</span>
+                </div>
+              ) : (
+                <div class="relative aspect-[5/3] overflow-hidden flex items-center justify-center" style="background: linear-gradient(150deg, #053471, #002148);">
+                  <div class="hero-mesh absolute inset-0 opacity-50"></div>
+                  <div class="glow-orb" style="width: 220px; height: 220px; top: -60px; right: -50px; background: #FF5500; opacity: 0.18;"></div>
+                  <span class="relative w-16 h-16 rounded-2xl bg-white/10 border border-white/15 inline-flex items-center justify-center">
+                    <Icon name="Car" size={28} strokeWidth={1.8} class="text-orange-bright" />
+                  </span>
+                  <span class="absolute top-3 left-3 pill pill-dark !py-1 !px-2.5 !text-[0.62rem]">Sourced to order</span>
+                </div>
+              )}
+
+              <div class="flex flex-col flex-1 p-6 md:p-7">
+                <h3 class="font-display font-extrabold uppercase tracking-tight text-ink leading-none mb-3" style="font-size: clamp(1.35rem, 2.4vw, 1.7rem);">
+                  {brand}<span class="text-orange">.</span>
+                </h3>
+                <p class="text-[0.7rem] uppercase tracking-[0.16em] text-orange-deep font-mono mb-2">Common parts</p>
+                <p class="text-muted text-[0.93rem] leading-relaxed mb-5">{commonParts}.</p>
+                <div class="mt-auto pt-4 border-t border-line flex items-center justify-between gap-3">
+                  {hasPhoto ? (
+                    <span class="text-[0.78rem] text-muted-light font-mono">
+                      {brandStockCount(brand)} live {brandStockCount(brand) === 1 ? 'listing' : 'listings'}
+                    </span>
+                  ) : (
+                    <span class="text-[0.78rem] text-muted-light font-mono">Ask us to source</span>
+                  )}
+                  <a href={whatsappLink} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-[0.85rem] font-semibold text-orange-deep group-hover:text-orange transition">
+                    <Icon name="MessageCircle" size={15} strokeWidth={2.2} />
+                    Enquire
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FULL COVERAGE BAND (dark) ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 460px; height: 460px; top: -150px; left: -110px; background: #15529E; opacity: 0.4;"></div>
+    <div class="glow-orb" style="width: 420px; height: 420px; bottom: -160px; right: -100px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-12 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">The full picture</span>
+        <h2 class="heading-lg text-white text-balance mt-1">Makes we cover today.</h2>
+        <p class="text-lg text-white/70 mt-4 text-pretty">{site.stats.listings}+ parts listed and over {site.stats.yearsExperience} years sourcing for premium and mainstream cars. These are the makes we handle most — and the list keeps growing.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2.5 md:gap-3 max-w-4xl mx-auto fade-in stagger-1">
+        {allBrands.map((b) => (
+          <span class="pill pill-dark !text-[0.8rem] !tracking-normal !normal-case !font-semibold">{b}</span>
+        ))}
+        <a href={whatsappLink} target="_blank" rel="noopener" class="pill pill-orange !text-[0.8rem] !tracking-normal !normal-case !font-semibold">
+          and many more — ask us
+          <Icon name="ArrowRight" size={13} strokeWidth={2.6} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ COMING SOON ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="card-feature !p-8 md:!p-12 max-w-4xl mx-auto fade-in">
+        <div class="grid md:grid-cols-[auto_1fr] gap-7 md:gap-10 items-center">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(180deg, #053471, #002148);">
+            <Icon name="Sparkles" size={28} strokeWidth={1.9} class="text-orange-bright" />
+          </div>
+          <div>
+            <span class="eyebrow mb-4">On the horizon</span>
+            <h2 class="heading-md text-balance mt-1 mb-3">New makes coming soon to our range.</h2>
+            <p class="text-muted text-[0.98rem] leading-relaxed mb-6 text-pretty">We're continually expanding the brands we stock as new and growing makes hit UK roads. These are coming soon to our range — and we can already source many of them on request.</p>
+            <div class="flex flex-wrap gap-2.5">
+              {comingSoonBrands.map((b) => (
+                <span class="tag">
+                  <Icon name="Plus" size={13} strokeWidth={2.6} class="text-orange-deep" />
+                  {b}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CAN'T SEE YOUR MAKE ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">Don't see your make?</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Tell us your make, model and year — we'll source it.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">Our list isn't exhaustive. If your car isn't shown above, send us the make, model and year (and a registration if you have it) and we'll check our network. With over {site.stats.yearsExperience} years in the trade, we can usually track down the right part — genuine or quality aftermarket.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+              <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+              WhatsApp your details
+            </a>
+            <a href={telLandline} class="btn btn-navy btn-lg">
+              <Icon name="Phone" size={17} strokeWidth={2.3} />
+              Call {site.phoneLandline}
+            </a>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5 fade-in stagger-1">
+          <div class="tile">
+            <span class="tile-icon tile-icon-orange mb-4"><Icon name="Search" size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-ink text-[1.02rem] mb-1.5 leading-snug">We check the network</h3>
+            <p class="text-muted text-[0.9rem] leading-relaxed">Make, model and year is all we need to start the hunt across our suppliers.</p>
+          </div>
+          <div class="tile">
+            <span class="tile-icon tile-icon-orange mb-4"><Icon name="BadgeCheck" size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-ink text-[1.02rem] mb-1.5 leading-snug">Genuine or quality</h3>
+            <p class="text-muted text-[0.9rem] leading-relaxed">We'll quote the best fit for your budget — original equipment or trusted aftermarket.</p>
+          </div>
+          <div class="tile">
+            <span class="tile-icon tile-icon-orange mb-4"><Icon name="Wrench" size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-ink text-[1.02rem] mb-1.5 leading-snug">Fitted if you like</h3>
+            <p class="text-muted text-[0.9rem] leading-relaxed">Found the part? Our in-house team can fit, repair and paint it too — one trip.</p>
+          </div>
+          <div class="tile">
+            <span class="tile-icon tile-icon-orange mb-4"><Icon name="Truck" size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-ink text-[1.02rem] mb-1.5 leading-snug">Collect or delivery</h3>
+            <p class="text-muted text-[0.9rem] leading-relaxed">Pick up from Chadwell Heath or arrange delivery — trade and private welcome.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <BrandStrip dark={true} />
+
+  <CtaBand />
+</Layout>

@@ -1,0 +1,192 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import MapBlock from '../components/MapBlock.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, whatsappLink, trustSignals } from '../data/site';
+import { aboutStory, whyChooseUs } from '../data/content';
+
+// The one-stop combination — built from the real four-way offer.
+const oneStop = [
+  {
+    icon: 'Car',
+    title: 'We supply the part',
+    body: 'Genuine and quality parts across premium and mainstream makes — bumpers, panels, lighting, trims and more, checked to high standards before they reach you.',
+  },
+  {
+    icon: 'Wrench',
+    title: 'We fit it',
+    body: 'No separate garage to find. Our own team fits the part in the same place you bought it — booked in to suit you.',
+  },
+  {
+    icon: 'Hammer',
+    title: 'We repair the bodywork',
+    body: 'Dents, panels and accident damage put right by the same workshop, so the part and the body around it are sorted together.',
+  },
+  {
+    icon: 'PaintBucket',
+    title: 'We paint and finish it',
+    body: 'Panel respray, colour matching and full colour changes in-house — the job comes back to you finished, not half done.',
+  },
+];
+---
+
+<Layout
+  current="/about"
+  title="About Major Car Parts — Chadwell Heath Car Parts Supplier & Workshop"
+  description="Over 15 years supplying quality car parts in Chadwell Heath, with in-house fitting, body repair and spray paint. Trade and private welcome."
+>
+  <PageHero
+    eyebrow="Our story"
+    title="Chadwell Heath's parts-and-workshop, all under one roof."
+    subtitle="A car parts supplier with a full in-house workshop — over 15 years in the trade, serving garages and private drivers alike across East London."
+    image="/images/workshop-engine.jpg"
+    crumb="About"
+    primary={{ href: '/contact', label: 'Get in touch' }}
+    secondary={{ href: '/parts', label: 'Browse parts' }}
+  />
+
+  <!-- ════════ STORY ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Editorial image + stat callout -->
+        <div class="relative fade-in">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img
+              src="/images/stock/garage-1.jpg"
+              alt="Tools laid out in the Major Car Parts workshop in Chadwell Heath"
+              width="1000"
+              height="1200"
+              class="w-full aspect-[4/5] object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.45) 100%);"></div>
+          </div>
+          <div class="absolute -bottom-6 -right-2 md:right-6 glass-light rounded-2xl px-6 py-5 max-w-[15rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="big-number text-ink" style="font-size: clamp(2rem,5vw,2.75rem);"><span data-count={site.stats.yearsExperience} data-suffix="+">{site.stats.yearsExperience}+</span></p>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-muted mt-1 font-mono">Years in the automotive trade</p>
+          </div>
+        </div>
+
+        <!-- Story copy -->
+        <div class="fade-in stagger-1">
+          <span class="eyebrow mb-5">Who we are</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Parts and workshop, run by one team — not passed between three.</h2>
+          <div class="space-y-5 text-pretty">
+            {aboutStory.map((para, i) => (
+              <p class={`leading-relaxed ${i === 0 ? 'text-lg text-muted' : 'text-[0.98rem] text-muted'}`}>{para}</p>
+            ))}
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3 mt-8">
+            {trustSignals.map((t) => (
+              <div class="flex items-center gap-2.5 text-ink">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                <span class="font-medium text-[0.95rem]">{t}</span>
+              </div>
+            ))}
+          </div>
+          <div class="mt-8">
+            <a href={telLandline} class="btn btn-navy">
+              <Icon name="Phone" size={16} strokeWidth={2.3} />
+              Call {site.phoneLandline}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WHY CHOOSE US ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="The Major Car Parts difference"
+        title="Why customers trust us"
+        intro="Six reasons garages, bodyshops and private drivers keep coming back to Chadwell Heath for their parts and their fitting."
+        align="center"
+      />
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-14">
+        {whyChooseUs.map((w, i) => (
+          <div class={`card-feature group fade-in stagger-${(i % 3) + 1}`}>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name={w.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-ink mb-1.5 leading-snug">{w.title}</h3>
+            <p class="text-[0.8rem] font-semibold uppercase tracking-wide text-orange-deep mb-3 font-mono">{w.subtitle}</p>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{w.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ THE ONE-STOP COMBINATION (dark band) ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 460px; height: 460px; top: -130px; left: -110px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="glow-orb" style="width: 400px; height: 400px; bottom: -150px; right: -100px; background: #15529E; opacity: 0.32;"></div>
+    <div class="container-mcp relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5 fade-in">
+          <span class="eyebrow eyebrow-light mb-5">Why under one roof matters</span>
+          <h2 class="heading-lg text-white text-balance mt-1 mb-6">One supplier. One workshop. One trip instead of three.</h2>
+          <p class="text-lg text-white/70 leading-relaxed mb-6 text-pretty">
+            Most parts suppliers hand you a box and point you to a separate garage for fitting, another for bodywork and a third for paint. We do the lot in Chadwell Heath — so the people who supply the part are the ones who finish the job.
+          </p>
+          <div class="flex flex-wrap gap-2.5 mb-8">
+            {trustSignals.map((t) => (
+              <span class="pill pill-dark">
+                <Icon name="Check" size={13} strokeWidth={3} class="text-orange-bright" />
+                {t}
+              </span>
+            ))}
+          </div>
+          <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-glass btn-lg">
+            <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+            Ask us about a job
+          </a>
+        </div>
+
+        <div class="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+          {oneStop.map((item, i) => (
+            <div class={`card-navy rounded-[1.5rem] p-7 fade-in stagger-${i + 1}`}>
+              <span class="w-12 h-12 rounded-xl inline-flex items-center justify-center mb-5 tile-icon">
+                <Icon name={item.icon} size={22} strokeWidth={2} />
+              </span>
+              <h3 class="font-bold text-[1.05rem] text-white mb-2 leading-snug">{item.title}</h3>
+              <p class="text-[0.9rem] text-white/65 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PROCESS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">How it works</span>
+        <h2 class="heading-lg text-balance mt-1">From enquiry to back on the road.</h2>
+        <p class="text-lg text-muted mt-4 text-pretty">Whether you are trade or driving in yourself, the path from first call to finished job is the same — and it is short.</p>
+      </div>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <!-- ════════ REVIEWS ════════ -->
+  <ReviewsSection dark={true} />
+
+  <!-- ════════ FIND US ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <MapBlock />
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

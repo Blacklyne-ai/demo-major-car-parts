@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import Faqs from '../../components/Faqs.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site, whatsappLink } from '../../data/site';
+import { serviceBySlug, workshopServices } from '../../data/services';
+import { faqs } from '../../data/content';
+
+const svc = serviceBySlug('fitting')!;
+
+// Fitting-relevant subset of the shared FAQ set
+const fittingFaqQs = [
+  'Do you fit the parts you supply?',
+  'Can’t find a specific part?',
+  'Are you trade or private?',
+  'What are your opening hours?',
+];
+const fittingFaqs = faqs.filter((f) => fittingFaqQs.includes(f.q));
+
+// Works-with band — the other workshop services (body repair + spray paint) plus parts supply
+const pairsWith = [
+  {
+    href: '/parts',
+    eyebrow: 'Start here',
+    title: 'Car Parts Supply',
+    body: 'Buy the genuine or quality part from us first — then we fit it. One supplier, one trip.',
+    icon: 'Car',
+  },
+  ...workshopServices
+    .filter((s) => s.slug !== 'fitting')
+    .map((s) => ({
+      href: s.href,
+      eyebrow: 'In-house workshop',
+      title: s.title,
+      body: s.tagline,
+      icon: s.icon,
+    })),
+];
+---
+
+<Layout
+  current="/services/fitting"
+  title="Parts Fitting Chadwell Heath — Buy & Fit Under One Roof | Major Car Parts"
+  description="In-house parts fitting in Chadwell Heath. Buy the part and have it fitted in the same place — no second garage. Multi-brand. Call 020 3592 1629."
+>
+  <PageHero
+    eyebrow={svc.eyebrow}
+    title="Parts fitting, done where you bought them."
+    subtitle={svc.tagline}
+    image={svc.image}
+    crumb="Parts Fitting"
+    primary={{ href: '/contact', label: 'Book a Fitting' }}
+    secondary={{ href: whatsappLink, label: 'WhatsApp us' }}
+  />
+
+  <!-- ════════ OVERVIEW ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">Buy &amp; fit under one roof</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">No second garage. We supply the part and fit it ourselves.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-5 text-pretty">{svc.lead}</p>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            It saves you the usual run-around — sourcing the part in one place, then chasing a workshop to fit it in another. Buy it here and our own team books it straight in, so it goes on correctly the first time. One visit, one team, one bill.
+          </p>
+
+          <h3 class="text-[0.72rem] uppercase tracking-[0.2em] text-muted font-mono mb-4">What we fit</h3>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-3.5">
+            {svc.includes.map((item) => (
+              <li class="flex items-start gap-3 text-ink">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Icon name="Check" size={14} strokeWidth={3} />
+                </span>
+                <span class="font-medium text-[0.95rem] leading-snug">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="relative fade-in stagger-1">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img
+              src="/images/workshop-engine.jpg"
+              alt="Our mechanic fitting parts at the engine bay in the Chadwell Heath workshop"
+              width="1000"
+              height="800"
+              class="w-full aspect-[5/4] object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.45) 100%);"></div>
+          </div>
+          <div class="absolute -bottom-6 -left-2 md:left-6 glass-light rounded-2xl px-6 py-5 max-w-[16rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="big-number text-ink" style="font-size: clamp(2rem,5vw,2.75rem);"><span data-count={site.stats.yearsExperience} data-suffix="+">{site.stats.yearsExperience}+</span></p>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-muted mt-1 font-mono">Years fitting parts in-house</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FEATURES ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="The advantage"
+        title="Why have us fit it."
+        intro="Fitted by the people who supplied the part — so it’s the right part, fitted right, without a second trip across town."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 gap-5 md:gap-6 mt-12">
+        {svc.features.map((f, i) => (
+          <div class={`card-feature group fade-in stagger-${(i % 4) + 1}`}>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name={f.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{f.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PROCESS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">How a fitting works</span>
+        <h2 class="heading-lg text-balance mt-1">From enquiry to back on the road.</h2>
+        <p class="text-lg text-muted mt-4 text-pretty">Tell us the part, we confirm it fits your vehicle, our workshop fits it, and you drive away — often the same day.</p>
+      </div>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <!-- ════════ WORKS-WITH BAND ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; bottom: -150px; right: -100px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="max-w-2xl mb-12">
+        <SectionHeading
+          eyebrow="One roof, the whole job"
+          title="Fitting pairs with everything else we do."
+          intro="Because parts supply, body repair and spray paint all live under our own roof, fitting rarely travels alone. Need a damaged panel put right before it goes on, or refinished to match? We handle that in the same place."
+          light={true}
+        />
+      </div>
+      <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+        {pairsWith.map((p, i) => (
+          <a href={p.href} class={`card-navy group flex flex-col fade-in stagger-${i + 1}`}>
+            <span class="tile-icon tile-icon-orange mb-5"><Icon name={p.icon} size={22} strokeWidth={2} /></span>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-orange-bright font-mono mb-2">{p.eyebrow}</p>
+            <h3 class="font-bold text-lg text-white mb-2 leading-snug">{p.title}</h3>
+            <p class="text-white/65 text-[0.93rem] leading-relaxed mb-5 flex-1">{p.body}</p>
+            <span class="arrow-link-light text-[0.9rem]">Explore {p.title.toLowerCase()}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FAQs ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Good to know</span>
+        <h2 class="heading-lg text-balance mt-1">Fitting questions, answered.</h2>
+        <p class="text-lg text-muted mt-4 text-pretty">Anything else, just ask — call the office on {site.phoneLandline} or message us on WhatsApp.</p>
+      </div>
+      <Faqs items={fittingFaqs} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Bought a part? Let’s get it fitted."
+    text="Tell us your vehicle make, model and year and which part you need fitting. We’ll confirm it’s right, book you in and finish the job in-house — fitting, body repair and spray paint all under one roof in Chadwell Heath."
+  />
+</Layout>

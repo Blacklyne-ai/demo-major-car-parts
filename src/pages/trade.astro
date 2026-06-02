@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, telMobile, mailLink, whatsappLink, allBrands } from '../data/site';
+import { tradeIntro, tradePoints } from '../data/content';
+
+// Who the trade page is for — real audiences, no invented claims.
+const tradeAudiences = [
+  {
+    icon: 'Wrench',
+    title: 'Independent garages',
+    body: 'Order the parts you need and send overflow fitting our way when your own ramps are full. Same-trip supply and fit, in-house.',
+  },
+  {
+    icon: 'Hammer',
+    title: 'Bodyshops & repairers',
+    body: 'Panels, bumpers, lighting and trims for the makes you work on — plus body repair and spray capacity when you need an extra pair of hands.',
+  },
+  {
+    icon: 'Store',
+    title: 'Workshops & dealers',
+    body: 'A trade-friendly supplier on a Chadwell Heath industrial estate with the brand range, the stock and the workshop to back it up.',
+  },
+];
+
+// What a trade relationship gives you — anchored to tradePoints, no invented terms.
+const tradeBenefits = [
+  'Genuine and quality parts for premium, mainstream and EV makes',
+  'In-house fitting, body repair and spray paint for overflow work',
+  'Collection from the estate or fast UK delivery on stocked parts',
+  'A direct line to the office for sourcing and trade enquiries',
+];
+
+// Steps to open a trade account — kept to "talk to us", no credit terms invented.
+const accountSteps = [
+  {
+    n: '01',
+    icon: 'Phone',
+    title: 'Call the office',
+    body: `Ring the landline on ${site.phoneLandline} and let us know you're trade. The office handles trade accounts, sourcing and bulk enquiries.`,
+  },
+  {
+    n: '02',
+    icon: 'Building2',
+    title: 'Tell us about your business',
+    body: 'Give us a feel for what you do and the makes you work on, so we can match the right parts and talk through trade terms that suit you.',
+  },
+  {
+    n: '03',
+    icon: 'CircleCheck',
+    title: 'Start ordering',
+    body: 'Once you’re set up, repeat orders are quick and straightforward — by phone, WhatsApp or email, ready to collect or sent out to you.',
+  },
+];
+---
+
+<Layout
+  current="/trade"
+  title="Trade Car Parts London — Wholesale & Workshop Overflow | Major Car Parts"
+  description="Trade car parts in Chadwell Heath for garages and bodyshops — parts, trade accounts, delivery and overflow fitting, body repair and paint."
+>
+  <PageHero
+    eyebrow="Trade & wholesale"
+    title="A trade-friendly parts supplier with a workshop to match."
+    subtitle={tradeIntro}
+    image="/images/stock/engine-1.jpg"
+    crumb="Trade"
+    primary={{ href: telLandline, label: 'Call the office' }}
+    secondary={{ href: mailLink, label: 'Email the team' }}
+  />
+
+  <!-- ════════ WHO IT'S FOR ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">Built for the trade</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Buy your parts here. Use our workshop when the bays are full.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-5 text-pretty">
+            Garages, bodyshops and workshops across East London buy parts from us for premium, mainstream and EV makes — then lean on our in-house team for fitting, body repair and spray paint when their own capacity runs out.
+          </p>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            It’s one trade-friendly supplier doing both jobs: the parts counter and the workshop, under one roof. Over 15 years in the automotive trade means we know what fits, what lasts and how to turn it round.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            {tradeBenefits.map((b) => (
+              <div class="flex items-start gap-2.5 text-ink">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0 mt-0.5"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                <span class="font-medium text-[0.95rem] leading-snug">{b}</span>
+              </div>
+            ))}
+          </div>
+          <div class="glass-light rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+            <span class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name="PhoneCall" size={20} strokeWidth={2} class="text-orange-bright" />
+            </span>
+            <div class="flex-1">
+              <p class="text-[0.72rem] uppercase tracking-[0.16em] text-muted font-mono mb-1">Trade & office line</p>
+              <a href={telLandline} class="text-xl font-black text-ink hover:text-orange-deep transition stat-num">{site.phoneLandline}</a>
+            </div>
+            <a href={telLandline} class="btn btn-navy btn-sm flex-shrink-0">
+              <Icon name="Phone" size={15} strokeWidth={2.3} />
+              Call now
+            </a>
+          </div>
+        </div>
+
+        <div class="grid gap-5 fade-in stagger-1">
+          {tradeAudiences.map((a, i) => (
+            <div class={`card-feature group fade-in stagger-${i + 1}`}>
+              <div class="flex items-start gap-4">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(180deg, #053471, #002148);">
+                  <Icon name={a.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+                </div>
+                <div>
+                  <h3 class="font-bold text-lg text-ink mb-1.5 leading-snug">{a.title}</h3>
+                  <p class="text-muted text-[0.93rem] leading-relaxed">{a.body}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ HOW WE WORK WITH THE TRADE ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Working together"
+        title="How we work with the trade."
+        intro="Four ways a trade relationship with Major Car Parts keeps your jobs moving — from the right part at the right price to a workshop you can call on when you’re stretched."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 gap-5 md:gap-6 mt-12">
+        {tradePoints.map((p, i) => (
+          <div class={`card-feature group fade-in stagger-${(i % 2) + 1}`}>
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style="background: linear-gradient(180deg, #053471, #002148);">
+                <Icon name={p.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+              </div>
+              <div>
+                <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{p.title}</h3>
+                <p class="text-muted text-[0.95rem] leading-relaxed">{p.body}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-center text-muted text-[0.95rem] mt-10 max-w-2xl mx-auto fade-in">
+        Prefer to talk it through? The office handles sourcing, trade accounts and bulk enquiries on
+        <a href={telLandline} class="text-orange-deep font-semibold hover:underline">{site.phoneLandline}</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ OPEN A TRADE ACCOUNT (dramatic dark band) ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; left: -110px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="glow-orb" style="width: 380px; height: 380px; bottom: -140px; right: -90px; background: #15529E; opacity: 0.3;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">Trade accounts</span>
+        <h2 class="heading-lg text-white text-balance mt-1">Open a trade account in three steps.</h2>
+        <p class="text-lg text-white/70 mt-4 text-pretty">No forms to wrestle with — a quick conversation gets you set up. We’ll talk through trade terms that suit how your business orders.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5 md:gap-6 max-w-5xl mx-auto">
+        {accountSteps.map((s, i) => (
+          <div class={`card-navy relative fade-in stagger-${i + 1}`}>
+            <span class="absolute top-5 right-6 text-5xl font-black text-white/5 stat-num select-none">{s.n}</span>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 glass">
+              <Icon name={s.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-white mb-2 leading-snug">{s.title}</h3>
+            <p class="text-white/65 text-[0.93rem] leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 mt-12 fade-in stagger-3">
+        <a href={telLandline} class="btn btn-primary btn-lg">
+          <Icon name="Phone" size={17} strokeWidth={2.3} />
+          Call the office · {site.phoneLandline}
+        </a>
+        <a href={telMobile} class="btn btn-glass btn-lg">
+          <Icon name="PhoneCall" size={17} strokeWidth={2.3} />
+          Direct mobile
+        </a>
+        <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+          <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+          WhatsApp
+        </a>
+      </div>
+      <p class="text-center text-sm text-white/45 mt-6 fade-in stagger-3">
+        Talk to us about trade terms — we keep it straightforward and tailored to your business.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ BRAND RANGE ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-12 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Brand range</span>
+        <h2 class="heading-lg text-balance mt-1">Premium, mainstream and EV — all from one supplier.</h2>
+        <p class="text-lg text-muted mt-4 text-pretty">
+          From premium marques like Lexus, Mercedes-Benz and Range Rover to everyday Fords and Volkswagens — and EV coverage including Tesla. The makes your customers drive, stocked and ready to source.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2.5 md:gap-3 max-w-4xl mx-auto mb-12 fade-in stagger-1">
+        {allBrands.map((b) => (
+          <span class="pill !text-[0.82rem] !tracking-normal !normal-case !font-semibold">{b}</span>
+        ))}
+        <a href="/brands" class="pill pill-orange !text-[0.82rem] !tracking-normal !normal-case !font-semibold">
+          and many more
+          <Icon name="ArrowRight" size={13} strokeWidth={2.6} />
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-5 md:gap-6 max-w-4xl mx-auto">
+        <div class="tile text-center fade-in stagger-1">
+          <span class="tile-icon tile-icon-orange mx-auto"><Icon name="ShieldCheck" size={22} strokeWidth={2} /></span>
+          <h3 class="font-bold text-ink mt-4 mb-1.5">Premium marques</h3>
+          <p class="text-muted text-[0.9rem] leading-relaxed">Lexus, Mercedes-Benz, BMW, Audi, Range Rover and Jaguar — genuine and quality parts without the main-dealer mark-up.</p>
+        </div>
+        <div class="tile text-center fade-in stagger-2">
+          <span class="tile-icon tile-icon-orange mx-auto"><Icon name="Car" size={22} strokeWidth={2} /></span>
+          <h3 class="font-bold text-ink mt-4 mb-1.5">Mainstream makes</h3>
+          <p class="text-muted text-[0.9rem] leading-relaxed">Ford, Volkswagen, Toyota, Kia, Nissan and more — the volume movers that keep a busy workshop turning.</p>
+        </div>
+        <div class="tile text-center fade-in stagger-3">
+          <span class="tile-icon tile-icon-orange mx-auto"><Icon name="Zap" size={22} strokeWidth={2} /></span>
+          <h3 class="font-bold text-ink mt-4 mb-1.5">EV coverage</h3>
+          <p class="text-muted text-[0.9rem] leading-relaxed">Electric is here, and so are the parts — Tesla covered now, with more EV makes coming to the catalogue.</p>
+        </div>
+      </div>
+
+      <p class="text-center text-muted text-[0.95rem] mt-10 max-w-2xl mx-auto fade-in">
+        Don’t see a make on the list? Send the registration or the make, model and year — we can usually source it.
+        <a href={whatsappLink} target="_blank" rel="noopener" class="text-orange-deep font-semibold hover:underline">Ask on WhatsApp</a>.
+      </p>
+    </div>
+  </section>
+
+  <BrandStrip brands={allBrands} dark={true} />
+
+  <CtaBand
+    title="Set up a trade account and order with confidence."
+    text="Parts for every make, plus in-house fitting, body repair and spray paint when your bays are full. Call the office to talk trade terms, or message the team — we’ll get you sorted."
+  />
+</Layout>

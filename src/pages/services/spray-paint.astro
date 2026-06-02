@@ -1,0 +1,285 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import Faqs from '../../components/Faqs.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site, telLandline, telMobile, whatsappLink, whatsappFor, mailFor } from '../../data/site';
+import { serviceBySlug, services } from '../../data/services';
+import { faqs } from '../../data/content';
+
+const svc = serviceBySlug('spray-paint')!;
+
+// Cross-links: body repair (refinishing after repair) + fitting.
+const related = services.filter((s) => s.slug === 'body-repair' || s.slug === 'fitting');
+
+// Paint-relevant FAQ subset (body repair / spray, brand cover, find us).
+const paintFaqQuestions = [
+  'Do you do body repair and spray paint too?',
+  'Which vehicle brands do you cover?',
+  'Where are you and how do I find you?',
+  'What are your opening hours?',
+];
+const paintFaqs = paintFaqQuestions
+  .map((q) => faqs.find((f) => f.q === q))
+  .filter((f): f is NonNullable<typeof f> => Boolean(f));
+
+const sprayWhatsApp = whatsappFor('Hi Major Car Parts, I would like a spray paint quote for my [vehicle make/model/year] please');
+const sprayMail = mailFor('Spray paint enquiry');
+
+// "How we get the colour right" — the colour-matching band.
+const colourSteps = [
+  { title: 'Find the code', body: 'We read your vehicle’s factory colour code from the build plate, then match to it precisely.', icon: 'Search' },
+  { title: 'Mix & test-spray', body: 'Paint is mixed to that code and test-sprayed so the shade and finish are right before we commit.', icon: 'Palette' },
+  { title: 'Spray & cure in-booth', body: 'Applied in even coats and cured in a controlled booth for a clean, durable, blemish-free finish.', icon: 'SprayCan' },
+  { title: 'Blend & check', body: 'Edges are blended into the surrounding panels and the result is quality-checked before it leaves us.', icon: 'CircleCheck' },
+];
+---
+
+<Layout
+  current="/services/spray-paint"
+  title="Car Spray Paint Chadwell Heath — Respray & Colour Matching | Major Car Parts"
+  description={`Professional car spray paint in Chadwell Heath — panel respray, colour matching and full colour changes in our booth. Call ${site.phoneLandline}.`}
+>
+  <PageHero
+    eyebrow={svc.eyebrow}
+    title="Professional car spray paint, colour-matched to your vehicle."
+    subtitle={svc.tagline}
+    image={svc.image}
+    crumb="Spray Paint"
+    primary={{ href: '#quote', label: 'Get a Spray Paint Quote' }}
+    secondary={{ href: telLandline, label: `Call ${site.phoneLandline}` }}
+  />
+
+  <!-- ════════ 1 · OVERVIEW ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Visual -->
+        <div class="relative fade-in order-last lg:order-first">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img src="/images/spray-booth.jpg" alt="A car masked up inside our spray booth at Major Car Parts" width="1200" height="900" class="w-full aspect-[4/3] object-cover" loading="lazy" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.45) 100%);"></div>
+          </div>
+          <!-- Floating spec card -->
+          <div class="absolute -bottom-6 -right-2 md:right-6 glass-light rounded-2xl px-6 py-5 max-w-[16rem]" style="box-shadow: var(--shadow-lift);">
+            <span class="w-11 h-11 rounded-xl inline-flex items-center justify-center mb-3" style="background: linear-gradient(180deg, #FF6B1F, #FF5500); color:#fff;">
+              <Icon name="Palette" size={20} strokeWidth={2} />
+            </span>
+            <p class="font-bold text-ink leading-snug">Matched to your factory colour code</p>
+            <p class="text-[0.78rem] text-muted mt-1.5 leading-relaxed">For repairs that disappear into the panel.</p>
+          </div>
+        </div>
+
+        <!-- Copy -->
+        <div class="fade-in stagger-1">
+          <span class="eyebrow mb-5">{svc.eyebrow}</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">From a single panel to a full respray — finished properly.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-7 text-pretty">{svc.lead}</p>
+
+          <div class="divider-orange mb-7"></div>
+
+          <h3 class="text-[0.72rem] uppercase tracking-[0.2em] text-muted font-mono mb-4">What our spray paint service covers</h3>
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            {svc.includes.map((item) => (
+              <div class="flex items-start gap-2.5 text-ink">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0 mt-0.5"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                <span class="font-medium text-[0.95rem] leading-snug">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#quote" class="btn btn-primary">
+              {svc.cta}
+              <Icon name="ArrowRight" size={15} strokeWidth={2.5} />
+            </a>
+            <a href={telMobile} class="btn btn-outline">
+              <Icon name="Phone" size={16} strokeWidth={2.3} />
+              {site.phoneMobile}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 2 · WHY OUR FINISH ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Why our finish stands up"
+        title="A booth finish, not a touch-up."
+        intro="Spray paint is only as good as the prep, the match and the environment it’s cured in. Here’s what goes into every job that leaves our booth."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mt-12">
+        {svc.features.map((f, i) => (
+          <div class={`card-feature group fade-in stagger-${(i % 4) + 1}`}>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name={f.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{f.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 3 · COLOUR MATCHING — DARK BAND ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 460px; height: 460px; top: -130px; left: -110px; background: #FF5500; opacity: 0.16;"></div>
+    <div class="glow-orb" style="width: 400px; height: 400px; bottom: -150px; right: -90px; background: #15529E; opacity: 0.32;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">Colour matching</span>
+        <h2 class="heading-lg text-white text-balance mt-1">We match to your exact factory colour code.</h2>
+        <p class="text-lg text-white/70 mt-4 text-pretty">A respray only looks right when the colour is right. We match to your vehicle’s original factory colour code so a repaired panel blends in seamlessly — and a full colour change comes out even and true.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {colourSteps.map((s, i) => (
+          <div class={`card-navy rounded-[1.5rem] p-7 relative fade-in stagger-${i + 1}`}>
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-5xl font-black stat-num leading-none text-white/12">{`0${i + 1}`}</span>
+              <span class="tile-icon w-12 h-12 rounded-xl inline-flex items-center justify-center">
+                <Icon name={s.icon} size={22} strokeWidth={2} />
+              </span>
+            </div>
+            <h3 class="font-bold text-[1.05rem] text-white mb-2 leading-snug">{s.title}</h3>
+            <p class="text-[0.9rem] text-white/65 leading-relaxed">{s.body}</p>
+            {i < colourSteps.length - 1 && (
+              <span class="hidden lg:block absolute top-1/2 -right-3 z-10 text-orange" aria-hidden="true">
+                <Icon name="ChevronRight" size={22} strokeWidth={2.5} />
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-12 fade-in">
+        <a href={sprayWhatsApp} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+          <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+          Ask about your colour code
+        </a>
+        <a href={telLandline} class="btn btn-light btn-lg">
+          <Icon name="Phone" size={17} strokeWidth={2.3} />
+          {site.phoneLandline}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 4 · HOW IT WORKS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">How it works</span>
+        <h2 class="heading-lg text-balance mt-1">From enquiry to a flawless finish.</h2>
+        <p class="text-lg text-muted mt-4 text-pretty">The same straightforward route for paint as for everything else we do — supply, repair and refinish under one roof, so you make one trip.</p>
+      </div>
+      <ProcessSteps />
+    </div>
+  </section>
+
+  <!-- ════════ 5 · PAIRS WITH (CROSS-LINKS) ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Better together"
+        title="The finishing step in the same workshop."
+        intro="Spray paint pairs naturally with the rest of our in-house workshop. Damage gets straightened in body repair, then flows straight into the booth for a seamless colour match — no second garage, no waiting on someone else."
+        ctaHref="/services"
+        ctaLabel="All Services"
+      />
+      <div class="grid sm:grid-cols-2 gap-6 mt-12">
+        {related.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+
+      <!-- One-stop strip -->
+      <div class="card !p-7 md:!p-9 mt-8 fade-in">
+        <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+          <span class="w-14 h-14 rounded-2xl flex-shrink-0 inline-flex items-center justify-center" style="background: linear-gradient(180deg, #FF6B1F, #FF5500); color:#fff;">
+            <Icon name="CircleCheck" size={26} strokeWidth={2} />
+          </span>
+          <div class="flex-1">
+            <h3 class="font-bold text-lg text-ink mb-1.5 leading-snug">Repaired and refinished in one place</h3>
+            <p class="text-muted text-[0.95rem] leading-relaxed text-pretty">We stock the panels, fit them and respray them — so accident damage is put right and colour-matched without sending you across town. Over 15 years in the trade behind every job.</p>
+          </div>
+          <a href="/services/body-repair" class="arrow-link flex-shrink-0">See body repair</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 6 · FAQ ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Spray paint FAQs</span>
+        <h2 class="heading-lg text-balance mt-1">Questions about resprays and colour.</h2>
+      </div>
+      <Faqs items={paintFaqs} emitSchema={true} />
+    </div>
+  </section>
+
+  <!-- ════════ 7 · QUOTE ════════ -->
+  <section id="quote" class="py-24 md:py-32 section-snow scroll-mt-24">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div class="fade-in lg:sticky lg:top-28">
+          <span class="eyebrow mb-5">Get a quote</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Tell us the panel and the colour.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">Let us know your vehicle, which panels need spraying and whether it’s a repair refinish or a colour change. We’ll come back with a quote — and if there’s damage to put right first, we can handle that too.</p>
+
+          <div class="space-y-3 mb-8">
+            <a href={telMobile} class="tile group">
+              <span class="tile-icon tile-icon-orange"><Icon name="Phone" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono mb-1 text-muted">Call — Mobile</p>
+                <p class="font-bold leading-tight font-mono text-lg text-ink">{site.phoneMobile}</p>
+                <p class="text-[0.82rem] mt-0.5 text-muted-light">Direct &amp; quick</p>
+              </div>
+            </a>
+            <a href={telLandline} class="tile group">
+              <span class="tile-icon"><Icon name="Phone" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono mb-1 text-muted">Call — Landline</p>
+                <p class="font-bold leading-tight font-mono text-lg text-ink">{site.phoneLandline}</p>
+                <p class="text-[0.82rem] mt-0.5 text-muted-light">Office &amp; trade</p>
+              </div>
+            </a>
+            <a href={sprayWhatsApp} target="_blank" rel="noopener" class="tile group">
+              <span class="tile-icon"><Icon name="MessageCircle" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono mb-1 text-muted">WhatsApp</p>
+                <p class="font-bold leading-tight text-lg text-ink">Message us</p>
+                <p class="text-[0.82rem] mt-0.5 text-muted-light">Send your make, model &amp; colour</p>
+              </div>
+            </a>
+            <a href={sprayMail} class="tile group">
+              <span class="tile-icon"><Icon name="Mail" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono mb-1 text-muted">Email</p>
+                <p class="font-bold leading-tight break-all text-[0.95rem] text-ink">{site.email}</p>
+                <p class="text-[0.82rem] mt-0.5 text-muted-light">We’ll reply with a quote</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <QuoteForm
+          title="Request a spray paint quote"
+          intro="Tell us your vehicle and what needs spraying. No account, no sign-up — submitting opens your email app with the details filled in, or message us on WhatsApp."
+        />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

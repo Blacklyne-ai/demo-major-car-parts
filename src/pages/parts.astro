@@ -1,0 +1,309 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import PartCard from '../components/PartCard.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, telMobile, whatsappLink, featuredBrands, allBrands } from '../data/site';
+import { partsService, services } from '../data/services';
+import { partCategories, products, featuredProducts, productImage } from '../data/parts';
+
+// Sister workshop services for the cross-links (fitting, body repair, spray paint)
+const fittingService = services.find((s) => s.slug === 'fitting')!;
+const bodyService = services.find((s) => s.slug === 'body-repair')!;
+const sprayService = services.find((s) => s.slug === 'spray-paint')!;
+
+// Real listings for the in-stock grid (12 = a clean multiple of the 4-col layout)
+const stockProducts = products.slice(0, 12);
+
+// Side image for the editorial intro — a real listing photo
+const introProduct = featuredProducts[2]; // Audi A5 S Line bonnet
+
+// Quick promises for the intro column
+const introPoints = [
+  { icon: 'ShieldCheck', label: 'Genuine & quality-checked' },
+  { icon: 'Wallet', label: 'Affordable, no dealer mark-up' },
+  { icon: 'Truck', label: 'Fast UK delivery' },
+  { icon: 'Store', label: 'Collect in person or buy on eBay' },
+];
+
+// Stats for the parts counter (all verifiable, from site data)
+const partsStats = [
+  { value: `${site.stats.listings}+`, label: 'Parts listed' },
+  { value: `${site.stats.productsSold.toLocaleString('en-GB')}+`, label: 'Products sold' },
+  { value: site.stats.ebayPositivePct, label: 'Positive feedback' },
+  { value: `${site.stats.yearsExperience}+`, label: 'Years in the trade' },
+];
+---
+
+<Layout
+  current="/parts"
+  title="Car Parts Chadwell Heath — Bumpers, Panels, Lighting & More | Major Car Parts"
+  description="Quality car parts in Chadwell Heath for Mercedes, BMW, Audi, Lexus, Tesla, Range Rover, Ford & more. Bumpers, panels, lighting. Call 020 3592 1629."
+>
+  <!-- ════════ HERO ════════ -->
+  <PageHero
+    eyebrow="Genuine &amp; quality parts"
+    title="Car parts for premium and mainstream makes."
+    subtitle={partsService.lead}
+    image="/images/stock/engine-1.jpg"
+    crumb="Parts"
+    primary={{ href: '/contact', label: 'Get a Parts Quote' }}
+    secondary={{ href: '/brands', label: 'Brands we cover' }}
+  />
+
+  <BrandStrip brands={featuredBrands} dark={true} />
+
+  <!-- ════════ EDITORIAL INTRO ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Text -->
+        <div class="fade-in">
+          <span class="eyebrow mb-5">The parts counter</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Quality-checked parts at affordable prices — and we can fit them too.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-5 text-pretty">
+            With over 15 years in the automotive industry, we supply compatible, quality-checked parts that get you back on the road — without the main-dealer mark-up. Bumpers, bonnets, wings, lighting, grilles, trims and more, for premium and mainstream makes alike.
+          </p>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            Order in person on Chadwell Heath Industrial Park, or browse hundreds of live listings on our eBay store. Fast UK delivery on stocked parts, with free shipping on orders over £80 — and if you want it fitted, repaired or painted, our in-house workshop handles that under the same roof.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            {introPoints.map((p) => (
+              <div class="flex items-center gap-2.5 text-ink">
+                <span class="w-9 h-9 rounded-xl bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0">
+                  <Icon name={p.icon} size={17} strokeWidth={2.1} />
+                </span>
+                <span class="font-medium text-[0.95rem]">{p.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href={site.ebayUrl} target="_blank" rel="noopener" class="btn btn-navy">
+              <Icon name="Store" size={16} strokeWidth={2.2} />
+              Shop on eBay
+            </a>
+            <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp">
+              <Icon name="MessageCircle" size={17} strokeWidth={2.2} />
+              Ask about a part
+            </a>
+          </div>
+        </div>
+
+        <!-- Image (real listing photo) -->
+        <div class="relative fade-in stagger-1 order-first lg:order-last">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line bg-white" style="box-shadow: var(--shadow-lift);">
+            <img src={productImage(introProduct)} alt={introProduct.title} width="1000" height="800" class="w-full aspect-[5/4] object-cover" loading="lazy" decoding="async" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 60%, rgba(0,18,43,0.30) 100%);"></div>
+            <span class="absolute top-4 left-4 tag !bg-white/90 !border-white/60 !text-ink text-[0.72rem]" style="backdrop-filter: blur(6px);">{introProduct.brand}</span>
+          </div>
+          <!-- Floating stat card -->
+          <div class="absolute -bottom-6 -left-2 md:-left-6 glass-light rounded-2xl px-6 py-5 max-w-[16rem]" style="box-shadow: var(--shadow-lift);">
+            <div class="flex items-center gap-2 mb-1.5">
+              <Icon name="Star" size={16} strokeWidth={2.2} class="text-orange-deep" />
+              <p class="big-number text-ink" style="font-size: clamp(1.6rem,4vw,2.1rem);">{site.stats.ebayPositivePct}</p>
+            </div>
+            <p class="text-[0.7rem] uppercase tracking-[0.14em] text-muted font-mono leading-snug">Positive feedback across {site.stats.ebayReviewCount.toLocaleString('en-GB')} eBay reviews</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CATEGORIES ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="What we stock"
+        title="Six ranges that keep cars on the road."
+        intro="Genuine and quality parts across the categories you need most — for premium marques and everyday makes alike. Don't see it listed? Tell us the make, model and year and we'll source it."
+        align="center"
+      />
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-12">
+        {partCategories.map((c, i) => <CategoryCard category={c} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ IN STOCK RIGHT NOW ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Live listings"
+        title="In stock right now."
+        intro="A snapshot of real parts on the shelf — every photo is the actual listing. Tap any item to enquire on WhatsApp, or browse the full catalogue on eBay."
+        ctaHref={site.ebayUrl}
+        ctaLabel="See all on eBay"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-12">
+        {stockProducts.map((p, i) => <PartCard product={p} index={i} />)}
+      </div>
+
+      <!-- Parts-counter stat bar -->
+      <div class="mt-14 rounded-[1.75rem] border border-line bg-snow grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-line overflow-hidden fade-in">
+        {partsStats.map((s) => (
+          <div class="px-5 py-6 md:px-7 md:py-7 text-center">
+            <p class="text-2xl md:text-4xl font-black text-navy stat-num">{s.value}</p>
+            <p class="text-[0.62rem] md:text-[0.7rem] text-muted uppercase tracking-widest mt-1.5 font-mono">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ ORDERING PROCESS (dramatic dark band) ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; left: -100px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="glow-orb" style="width: 380px; height: 380px; bottom: -140px; right: -90px; background: #15529E; opacity: 0.3;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">How ordering works</span>
+        <h2 class="heading-lg text-white text-balance mt-1">From enquiry to fitted and finished.</h2>
+        <p class="text-lg text-white/70 mt-4 text-pretty">Buying the part is only half of it. Because the workshop is in the same building, we can fit it, repair the panel around it and respray it — one trip, one team, one bill.</p>
+      </div>
+
+      <ProcessSteps dark={true} />
+
+      <!-- Cross-link to fitting -->
+      <div class="mt-12 max-w-3xl mx-auto fade-in stagger-2">
+        <div class="glass rounded-2xl p-6 md:p-7 flex flex-col sm:flex-row sm:items-center gap-5">
+          <span class="tile-icon w-14 h-14 rounded-2xl inline-flex items-center justify-center flex-shrink-0">
+            <Icon name={fittingService.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+          </span>
+          <div class="flex-1">
+            <h3 class="font-bold text-white text-lg leading-snug mb-1">Want it fitted while you're here?</h3>
+            <p class="text-white/65 text-[0.93rem] leading-relaxed">{fittingService.tagline}</p>
+          </div>
+          <a href={fittingService.href} class="btn btn-light flex-shrink-0">
+            Parts fitting
+            <Icon name="ArrowRight" size={14} strokeWidth={2.5} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TRADE vs PRIVATE ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Who we supply</span>
+        <h2 class="heading-lg text-balance mt-1">Trade and private customers, same parts, same care.</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6 max-w-4xl mx-auto">
+        <!-- Trade -->
+        <div class="card-feature group fade-in stagger-1">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+            <Icon name="Handshake" size={24} strokeWidth={2} class="text-orange-bright" />
+          </div>
+          <h3 class="font-bold text-lg text-ink mb-1.5 leading-snug">Trade &amp; garages</h3>
+          <p class="text-[0.8rem] font-semibold uppercase tracking-wide text-orange-deep mb-3 font-mono">B2B welcome</p>
+          <p class="text-muted text-[0.93rem] leading-relaxed mb-5">
+            Garages, bodyshops and workshops buy parts from us and lean on our in-house team for overflow fitting, body repair and paint. Ask about trade terms and opening a trade account.
+          </p>
+          <a href="/trade" class="arrow-link">Trade enquiries</a>
+        </div>
+
+        <!-- Private -->
+        <div class="card-feature group fade-in stagger-2">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+            <Icon name="UsersRound" size={24} strokeWidth={2} class="text-orange-bright" />
+          </div>
+          <h3 class="font-bold text-lg text-ink mb-1.5 leading-snug">Private customers</h3>
+          <p class="text-[0.8rem] font-semibold uppercase tracking-wide text-orange-deep mb-3 font-mono">Drive in &amp; collect</p>
+          <p class="text-muted text-[0.93rem] leading-relaxed mb-5">
+            Driving in yourself? You get exactly the same parts and the same care. Collect in person, have it fitted in the same visit, or order online — with Saturday morning opening for those who can't get in midweek.
+          </p>
+          <a href="/contact" class="arrow-link">Find &amp; visit us</a>
+        </div>
+      </div>
+
+      <!-- Workshop cross-links -->
+      <div class="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto mt-6">
+        {[fittingService, bodyService, sprayService].map((s, i) => (
+          <a href={s.href} class={`tile group fade-in stagger-${i + 1}`}>
+            <span class="tile-icon-orange w-11 h-11 rounded-xl inline-flex items-center justify-center mb-3">
+              <Icon name={s.icon} size={20} strokeWidth={2} />
+            </span>
+            <p class="font-semibold text-ink text-[0.95rem] mb-0.5 group-hover:text-orange-deep transition-colors">{s.title}</p>
+            <p class="text-muted text-[0.82rem] leading-snug">{s.eyebrow}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ BRAND STRIP (dark) ════════ -->
+  <BrandStrip brands={featuredBrands} dark={true} />
+
+  <!-- ════════ REQUEST A PART (form) ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <!-- Intro + direct contact -->
+        <div class="fade-in lg:sticky lg:top-28">
+          <span class="eyebrow mb-5">Can't find it? Ask us</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Tell us the make, model and year — we'll source it.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            We carry hundreds of listings and can find many more on request, across {allBrands.length} makes and counting. Send your vehicle details and what you need, and we'll confirm the right part, the price and whether you'd like it fitted, repaired or painted too.
+          </p>
+
+          <div class="rounded-2xl border border-line bg-white p-6 md:p-7" style="box-shadow: var(--shadow-card);">
+            <p class="text-[0.72rem] uppercase tracking-[0.18em] text-muted font-mono mb-4">Or contact us directly</p>
+            <div class="space-y-3">
+              <a href={telLandline} class="flex items-center gap-3.5 group">
+                <span class="tile-icon-orange w-11 h-11 rounded-xl inline-flex items-center justify-center flex-shrink-0">
+                  <Icon name="Phone" size={18} strokeWidth={2.1} />
+                </span>
+                <span>
+                  <span class="block text-[0.72rem] uppercase tracking-wide text-muted font-mono">Office &amp; trade</span>
+                  <span class="block font-bold text-ink group-hover:text-orange-deep transition-colors">{site.phoneLandline}</span>
+                </span>
+              </a>
+              <a href={telMobile} class="flex items-center gap-3.5 group">
+                <span class="tile-icon-orange w-11 h-11 rounded-xl inline-flex items-center justify-center flex-shrink-0">
+                  <Icon name="PhoneCall" size={18} strokeWidth={2.1} />
+                </span>
+                <span>
+                  <span class="block text-[0.72rem] uppercase tracking-wide text-muted font-mono">Quick direct line</span>
+                  <span class="block font-bold text-ink group-hover:text-orange-deep transition-colors">{site.phoneMobile}</span>
+                </span>
+              </a>
+              <a href={whatsappLink} target="_blank" rel="noopener" class="flex items-center gap-3.5 group">
+                <span class="tile-icon-orange w-11 h-11 rounded-xl inline-flex items-center justify-center flex-shrink-0">
+                  <Icon name="MessageCircle" size={18} strokeWidth={2.1} />
+                </span>
+                <span>
+                  <span class="block text-[0.72rem] uppercase tracking-wide text-muted font-mono">Type your enquiry</span>
+                  <span class="block font-bold text-ink group-hover:text-orange-deep transition-colors">WhatsApp us</span>
+                </span>
+              </a>
+            </div>
+            <div class="divider-orange my-5"></div>
+            <a href={site.ebayUrl} target="_blank" rel="noopener" class="flex items-center gap-2 text-[0.9rem] font-semibold text-orange-deep">
+              <Icon name="Store" size={16} strokeWidth={2.2} />
+              Browse the full catalogue on eBay
+              <Icon name="ArrowUpRight" size={14} strokeWidth={2.4} />
+            </a>
+          </div>
+        </div>
+
+        <!-- The form -->
+        <QuoteForm
+          title="Request a part or a quote"
+          intro="Tell us your vehicle and what you need. No account, no sign-up — submitting opens your email app with the details filled in, or message us on WhatsApp."
+        />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

@@ -1,0 +1,94 @@
+---
+import { site, telLandline, telMobile, mailLink, whatsappLink, legalNav } from '../data/site';
+import { services } from '../data/services';
+import Icon from './Icon.astro';
+const year = new Date().getFullYear();
+
+const company = [
+  { href: '/about', label: 'About Us' },
+  { href: '/brands', label: 'Brands We Stock' },
+  { href: '/trade', label: 'Trade Customers' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<footer class="bg-navy-ink text-white/70 pt-20 pb-8 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-70 pointer-events-none" style="background: radial-gradient(circle at 88% 8%, rgba(255,85,0,0.10) 0%, transparent 45%), radial-gradient(circle at 5% 95%, rgba(21,82,158,0.16) 0%, transparent 45%);"></div>
+
+  <div class="container-mcp relative">
+    <div class="grid md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+      <!-- Brand -->
+      <div class="md:col-span-4">
+        <a href="/" class="inline-flex mb-5" aria-label="Major Car Parts">
+          <img src="/logo-white.png" alt="Major Car Parts" width="200" height="81" class="h-11 w-auto" />
+        </a>
+        <p class="text-sm text-white/55 leading-relaxed max-w-xs mb-5">
+          Car parts and accessories supplier with in-house fitting, body repair and spray paint — for premium and mainstream makes. Chadwell Heath, East London.
+        </p>
+        <div class="flex items-center gap-2 text-sm mb-5">
+          <span class="stars">
+            {Array.from({ length: 5 }).map(() => (
+              <svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            ))}
+          </span>
+          <span class="text-white/55">{site.rating.positive} positive · {site.rating.count.toLocaleString('en-GB')} reviews</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <a href={site.ebayUrl} target="_blank" rel="noopener" aria-label="Major Car Parts on eBay" class="inline-flex items-center gap-2 px-3.5 h-10 rounded-full border border-white/12 text-white/75 hover:text-white hover:border-orange transition text-xs font-semibold" style="background: rgba(255,255,255,0.04);">
+            <Icon name="Store" size={15} /> eBay Store
+          </a>
+          <a href={whatsappLink} target="_blank" rel="noopener" aria-label="WhatsApp us" class="w-10 h-10 rounded-full inline-flex items-center justify-center border border-white/12 text-white/75 hover:text-white hover:border-orange transition" style="background: rgba(255,255,255,0.04);">
+            <Icon name="MessageCircle" size={17} />
+          </a>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="md:col-span-3">
+        <h3 class="text-white font-semibold mb-4 text-[0.7rem] tracking-[0.18em] uppercase font-mono">What We Do</h3>
+        <ul class="space-y-2.5 text-sm">
+          {services.map((s) => (<li><a href={s.href} class="text-white/55 hover:text-orange-bright transition">{s.title}</a></li>))}
+          <li><a href="/parts" class="text-white/55 hover:text-orange-bright transition">Browse Parts</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="md:col-span-2">
+        <h3 class="text-white font-semibold mb-4 text-[0.7rem] tracking-[0.18em] uppercase font-mono">Company</h3>
+        <ul class="space-y-2.5 text-sm">
+          {company.map((i) => (<li><a href={i.href} class="text-white/55 hover:text-orange-bright transition">{i.label}</a></li>))}
+          {legalNav.map((i) => (<li><a href={i.href} class="text-white/55 hover:text-orange-bright transition">{i.label}</a></li>))}
+        </ul>
+      </div>
+
+      <!-- Visit -->
+      <div class="md:col-span-3">
+        <h3 class="text-white font-semibold mb-4 text-[0.7rem] tracking-[0.18em] uppercase font-mono">Visit Us</h3>
+        <address class="not-italic text-sm text-white/55 leading-relaxed mb-3">
+          {site.address.unit}<br />
+          {site.address.estate}<br />
+          {site.address.street}, {site.address.city}<br />
+          {site.address.postcode}
+        </address>
+        <ul class="space-y-2 text-sm mb-4">
+          <li class="flex items-center gap-2"><span class="text-white/40 text-xs w-16">Landline</span> <a href={telLandline} class="text-white hover:text-orange-bright transition font-medium font-mono">{site.phoneLandline}</a></li>
+          <li class="flex items-center gap-2"><span class="text-white/40 text-xs w-16">Mobile</span> <a href={telMobile} class="text-white hover:text-orange-bright transition font-medium font-mono">{site.phoneMobile}</a></li>
+          <li class="flex items-center gap-2"><span class="text-white/40 text-xs w-16">Email</span> <a href={mailLink} class="text-white/55 hover:text-orange-bright transition break-all">{site.email}</a></li>
+        </ul>
+        <p class="text-sm text-white/55 leading-relaxed">
+          Mon–Fri · 8:30am–5:30pm<br />
+          Saturday · 8:30am–12:30pm<br />
+          Sunday · Closed
+        </p>
+      </div>
+    </div>
+
+    <div class="pt-6 flex flex-col md:flex-row md:justify-between gap-3 text-xs text-white/45">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <div class="flex flex-wrap gap-5">
+        {legalNav.map((i) => (<a href={i.href} class="hover:text-orange-bright transition">{i.label}</a>))}
+        <span>Car Parts · Fitting · Body Repair · Spray Paint — Chadwell Heath, London</span>
+      </div>
+    </div>
+  </div>
+</footer>

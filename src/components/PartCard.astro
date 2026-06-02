@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import { whatsappFor } from '../data/site';
+import { productImage, type Product } from '../data/parts';
+interface Props { product: Product; index?: number; }
+const { product, index = 0 } = Astro.props;
+const enquire = whatsappFor(`Hi, I'm interested in the ${product.title}. Is it available?`);
+---
+<div class="part-card group fade-in">
+  <div class="part-media">
+    <img src={productImage(product)} alt={product.title} width="800" height="600" loading={index < 4 ? 'eager' : 'lazy'} decoding="async" />
+    <span class="absolute top-3 left-3 tag !bg-white/90 !border-white/60 !text-ink text-[0.7rem]" style="backdrop-filter: blur(6px);">{product.brand}</span>
+  </div>
+  <div class="p-5 flex flex-col flex-1">
+    <h3 class="font-semibold text-ink text-[0.95rem] leading-snug mb-3 flex-1">{product.title}</h3>
+    <a href={enquire} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-[0.82rem] font-semibold text-orange-deep self-start group-hover:gap-2.5 transition-all">
+      <Icon name="MessageCircle" size={14} strokeWidth={2.2} />
+      Enquire about this part
+    </a>
+  </div>
+</div>

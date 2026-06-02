@@ -1,0 +1,256 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import PartCard from '../../components/PartCard.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import Faqs from '../../components/Faqs.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site, telLandline, telMobile, whatsappFor } from '../../data/site';
+import { serviceBySlug, services } from '../../data/services';
+import { products, productImage } from '../../data/parts';
+import { faqs } from '../../data/content';
+
+const svc = serviceBySlug('body-repair')!;
+
+// Cross-linked workshop services (repairs flow into respray; fitting sits alongside)
+const related = services.filter((s) => s.slug === 'spray-paint' || s.slug === 'fitting');
+
+// Real panel products we stock so repairs aren't held up — bumpers, bonnets, wings.
+const panelProducts = [
+  products[0],  // VW Golf 8 front bumper with grilles
+  products[5],  // Audi A5 S Line bonnet/hood panel
+  products[8],  // Lexus NX350h front right wing arch moulding
+  products[2],  // Mercedes A-Class W176 AMG A45 front bumper
+];
+
+// Overview secondary visual — a real panel product (body repair is panels).
+const overviewPanel = products[5]; // Audi A5 bonnet/hood panel
+
+// Body-repair-relevant FAQ subset (no fabrication — straight from content.ts)
+const bodyFaqs = faqs.filter((f) =>
+  ['Do you do body repair and spray paint too?',
+   'Do you fit the parts you supply?',
+   'Which vehicle brands do you cover?',
+   'Can’t find a specific part?',
+   'Are you trade or private?',
+   'Where are you and how do I find you?'].includes(f.q)
+);
+
+const quoteWa = whatsappFor('Hi Major Car Parts, I’d like a body repair quote for my [vehicle make/model/year]. The damage is …');
+
+const damageTypes = [
+  { title: 'Car park dents & dings', body: 'Trolley knocks, door dings and minor dents removed and the panel brought back to shape.', icon: 'CircleDot' },
+  { title: 'Scuffs & scrapes', body: 'Kerbed bumpers, scuffed wings and scraped panels repaired and prepped for refinishing.', icon: 'Brush' },
+  { title: 'Accident & collision damage', body: 'Front-end, rear-end and side-impact repairs returned to a straight, factory-style finish.', icon: 'Hammer' },
+  { title: 'Panel replacement', body: 'When a bumper, wing or bonnet is past repair, we fit a replacement from our own stock.', icon: 'Layers' },
+];
+---
+
+<Layout
+  current="/services/body-repair"
+  title="Car Body Repair Chadwell Heath — Dents, Panels & Accident Damage | Major Car Parts"
+  description="Professional in-house car body repair in Chadwell Heath — dents, panel work and accident damage, finished in our spray booth. Call 020 3592 1629."
+>
+  <PageHero
+    eyebrow={svc.eyebrow}
+    title="Car body repair, done properly and in-house."
+    subtitle={svc.tagline}
+    image={svc.image}
+    crumb="Body Repair"
+    primary={{ href: '#quote', label: svc.cta }}
+    secondary={{ href: telLandline, label: `Call ${site.phoneLandline}` }}
+  />
+
+  <!-- ════════ 1 · OVERVIEW ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="relative fade-in">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img src={productImage(overviewPanel)} alt={overviewPanel.title} width="1000" height="800" class="w-full aspect-[5/4] object-cover bg-snow" loading="lazy" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.4) 100%);"></div>
+            <span class="absolute top-4 left-4 pill pill-dark !text-[0.7rem]">{overviewPanel.brand} · panel in stock</span>
+          </div>
+          <div class="absolute -bottom-6 -right-2 md:right-6 glass-light rounded-2xl px-6 py-5 max-w-[15rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="big-number text-ink" style="font-size: clamp(2rem,5vw,2.75rem);"><span data-count={site.stats.yearsExperience} data-suffix="+">{site.stats.yearsExperience}+</span></p>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-muted mt-1 font-mono">Years in the automotive trade</p>
+          </div>
+        </div>
+        <div class="fade-in stagger-1">
+          <span class="eyebrow mb-5">{svc.eyebrow}</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">When a panel needs more than a swap, we put it right.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-6 text-pretty">{svc.lead}</p>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            Because we stock the panels and run our own spray booth, a repair doesn’t bounce between three places. Source, repair and refinish all happen under one roof in Chadwell Heath — one team, one trip, one bill.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-3 mb-8">
+            {svc.includes.map((item) => (
+              <div class="flex items-center gap-2.5 text-ink">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                <span class="font-medium text-[0.95rem]">{item}</span>
+              </div>
+            ))}
+          </div>
+          <a href="#quote" class="arrow-link">Get a body repair quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 2 · WHAT WE REPAIR (features) ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="What we repair"
+        title="From a car park ding to accident damage."
+        intro="Whatever your bodywork needs, our in-house team handles it — and finishes it with the same care we put into the parts we supply."
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        {svc.features.map((f, i) => (
+          <div class={`card-feature group fade-in stagger-${(i % 4) + 1}`}>
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #053471, #002148);">
+              <Icon name={f.icon} size={24} strokeWidth={2} class="text-orange-bright" />
+            </div>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{f.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 3 · DAMAGE TYPES + PROCESS (dramatic navy band) ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; left: -110px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="glow-orb" style="width: 380px; height: 380px; bottom: -140px; right: -90px; background: #15529E; opacity: 0.3;"></div>
+    <div class="container-mcp relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5 fade-in">
+          <span class="eyebrow eyebrow-light mb-5">Damage we put right</span>
+          <h2 class="heading-lg text-white text-balance mt-1 mb-5">Most of what comes through our doors.</h2>
+          <p class="text-lg text-white/70 leading-relaxed mb-8 text-pretty">
+            From the everyday knocks of London driving to bigger collision work, we straighten, reshape and replace — then refinish so the repair disappears.
+          </p>
+          <a href="#quote" class="btn btn-primary btn-lg">
+            {svc.cta}
+            <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+          </a>
+        </div>
+        <div class="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+          {damageTypes.map((d, i) => (
+            <div class={`card-navy rounded-[1.5rem] p-7 fade-in stagger-${(i % 4) + 1}`}>
+              <span class="tile-icon w-12 h-12 rounded-xl inline-flex items-center justify-center mb-5"><Icon name={d.icon} size={22} strokeWidth={2} /></span>
+              <h3 class="font-bold text-[1.05rem] text-white mb-2 leading-snug">{d.title}</h3>
+              <p class="text-white/65 text-[0.9rem] leading-relaxed">{d.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-20">
+        <div class="text-center max-w-2xl mx-auto mb-12 fade-in">
+          <span class="eyebrow eyebrow-light eyebrow-center mb-5">How a repair works</span>
+          <h2 class="heading-lg text-white text-balance mt-1">Four stages, one workshop.</h2>
+        </div>
+        <ProcessSteps dark={true} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 4 · PANELS WE STOCK ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Parts on hand"
+        title="We stock the panels, so repairs aren’t held up."
+        intro="Bumpers, bonnets and wings for premium and mainstream makes alike — the same quality-checked parts we supply across the counter, ready to go straight onto your repair."
+        ctaHref="/parts"
+        ctaLabel="Browse all parts"
+      />
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mt-12">
+        {panelProducts.map((p, i) => <PartCard product={p} index={i} />)}
+      </div>
+      <p class="text-center text-muted text-[0.95rem] mt-10 max-w-2xl mx-auto fade-in">
+        Need a specific panel? Send us the make, model and year — we carry hundreds of listings and can source many more on request.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ 5 · CROSS-LINK: SPRAY PAINT + FITTING ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="The rest of the workshop"
+        title="Repair, refinish, fit — all in one place."
+        intro="Body repair rarely travels alone. A repair flows straight into our spray booth for a seamless colour match, and our fitting team handles any parts the job needs."
+        ctaHref="/services"
+        ctaLabel="All Services"
+      />
+      <div class="grid sm:grid-cols-2 gap-6 mt-12 max-w-3xl mx-auto lg:max-w-none">
+        {related.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 6 · QUOTE ════════ -->
+  <section id="quote" class="py-24 md:py-32 bg-white scroll-mt-24">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">Get a quote</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Tell us about the damage.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            Send your vehicle make, model and year and a quick description of the damage — photos help. We’ll let you know what the repair involves, whether a panel needs replacing and whether it should flow into a respray.
+          </p>
+
+          <div class="space-y-3 mb-9">
+            {svc.includes.map((item) => (
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0 mt-0.5"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                <span class="text-ink font-medium text-[0.97rem]">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-3">
+            <a href={telLandline} class="tile group">
+              <span class="tile-icon tile-icon-orange mb-3"><Icon name="Phone" size={20} strokeWidth={2.1} /></span>
+              <p class="text-[0.7rem] uppercase tracking-[0.14em] text-muted font-mono mb-1">Office &amp; trade</p>
+              <p class="font-bold text-ink group-hover:text-orange-deep transition-colors">{site.phoneLandline}</p>
+            </a>
+            <a href={quoteWa} target="_blank" rel="noopener" class="tile group">
+              <span class="tile-icon mb-3" style="background: linear-gradient(180deg, #25D366, #128C7E); color:#fff;"><Icon name="MessageCircle" size={20} strokeWidth={2.1} /></span>
+              <p class="text-[0.7rem] uppercase tracking-[0.14em] text-muted font-mono mb-1">Quick photos &amp; chat</p>
+              <p class="font-bold text-ink group-hover:text-orange-deep transition-colors">WhatsApp us</p>
+            </a>
+          </div>
+        </div>
+
+        <QuoteForm
+          title="Request a body repair quote"
+          intro="Tell us your vehicle and describe the damage. No account, no sign-up — submitting opens your email app with the details filled in, or message us on WhatsApp."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 7 · FAQ ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Body repair FAQs</span>
+        <h2 class="heading-lg text-balance mt-1">Common questions, answered.</h2>
+      </div>
+      <Faqs items={bodyFaqs} emitSchema={true} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Damaged panel? Let’s put it right."
+    text="Repaired, refinished and back on the road — body repair, spray paint and the panels to match, all under one roof in Chadwell Heath. Trade and private welcome."
+  />
+</Layout>

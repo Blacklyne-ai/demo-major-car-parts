@@ -1,0 +1,91 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+interface Props { title?: string; intro?: string; }
+const {
+  title = 'Request a part or a quote',
+  intro = 'Tell us your vehicle and what you need. No account, no sign-up — submitting opens your email app with the details filled in, or message us on WhatsApp.',
+} = Astro.props;
+const services = ['Parts only', 'Parts + fitting', 'Body repair', 'Spray paint', 'Not sure yet'];
+---
+<div class="card !p-6 md:!p-8 fade-in" >
+  <h3 class="heading-md text-ink mb-2">{title}</h3>
+  <p class="text-muted text-[0.95rem] leading-relaxed mb-6 text-pretty">{intro}</p>
+
+  <form id="quote-form" data-email={site.email} data-wa={site.phoneMobileDigits} class="space-y-4" novalidate>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label class="field-label" for="qf-name">Your name</label>
+        <input class="field" id="qf-name" name="name" type="text" autocomplete="name" placeholder="Jane Smith" required />
+      </div>
+      <div>
+        <label class="field-label" for="qf-phone">Phone</label>
+        <input class="field" id="qf-phone" name="phone" type="tel" autocomplete="tel" placeholder="07…" />
+      </div>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label class="field-label" for="qf-email">Email</label>
+        <input class="field" id="qf-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+      </div>
+      <div>
+        <label class="field-label" for="qf-vehicle">Vehicle (make / model / year)</label>
+        <input class="field" id="qf-vehicle" name="vehicle" type="text" placeholder="e.g. BMW 3 Series G20, 2021" required />
+      </div>
+    </div>
+    <div>
+      <label class="field-label" for="qf-service">What do you need?</label>
+      <select class="field" id="qf-service" name="service">
+        {services.map((s) => <option value={s}>{s}</option>)}
+      </select>
+    </div>
+    <div>
+      <label class="field-label" for="qf-message">The part or work you need</label>
+      <textarea class="field" id="qf-message" name="message" rows="4" placeholder="e.g. Front bumper with grilles, or front-end accident damage repair and respray" required></textarea>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 pt-1">
+      <button type="submit" class="btn btn-primary btn-block sm:btn-block">
+        <Icon name="Mail" size={16} strokeWidth={2.2} />
+        Send enquiry by email
+      </button>
+      <button type="button" id="qf-whatsapp" class="btn btn-whatsapp">
+        <Icon name="MessageCircle" size={17} strokeWidth={2.2} />
+        WhatsApp instead
+      </button>
+    </div>
+    <p class="text-[0.78rem] text-muted-light flex items-center gap-1.5 pt-1">
+      <Icon name="Info" size={13} strokeWidth={2.2} />
+      We never share your details. See our <a href="/privacy-policy" class="text-orange-deep underline underline-offset-2">Privacy Policy</a>.
+    </p>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  if (form) {
+    const email = form.dataset.email || '';
+    const wa = form.dataset.wa || '';
+    const collect = () => {
+      const g = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null)?.value.trim() || '';
+      return {
+        name: g('qf-name'), phone: g('qf-phone'), em: g('qf-email'),
+        vehicle: g('qf-vehicle'), service: g('qf-service'), message: g('qf-message'),
+      };
+    };
+    const body = (d: ReturnType<typeof collect>) =>
+      `Name: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.em}\nVehicle: ${d.vehicle}\nNeed: ${d.service}\n\n${d.message}`;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const d = collect();
+      const subject = `Parts enquiry — ${d.vehicle || 'vehicle'} (${d.service})`;
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body(d))}`;
+    });
+    document.getElementById('qf-whatsapp')?.addEventListener('click', () => {
+      const d = collect();
+      const text = `Hi Major Car Parts, I'd like a quote.\n${body(d)}`;
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    });
+  }
+</script>

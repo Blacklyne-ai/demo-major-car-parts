@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, mailLink, telLandline, telMobile } from '../data/site';
+
+const lastUpdated = '2 June 2026';
+const addr = site.address;
+const postal = `${site.name}, ${addr.unit}, ${addr.estate}, ${addr.street}, ${addr.area}, ${addr.city}, ${addr.region} ${addr.postcode}`;
+---
+
+<Layout
+  current="/terms"
+  title="Terms of Service | Major Car Parts"
+  description="The terms on which Major Car Parts provides this website, parts and workshop services. Governing law: England & Wales."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Terms of Service"
+    subtitle="The terms on which we provide this website, our parts and our workshop services."
+    crumb="Terms of Service"
+  />
+
+  <section class="py-20 md:py-28 bg-white">
+    <div class="container-narrow">
+      <div class="legal-prose fade-in">
+        <p class="text-muted-light text-[0.85rem] uppercase tracking-[0.16em] font-mono mb-8">
+          Last updated: {lastUpdated}
+        </p>
+
+        <p>
+          These Terms of Service (the &ldquo;Terms&rdquo;) set out the basis on which
+          <strong>{site.name}</strong> (&ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;)
+          makes this website available to you and supplies our car parts and in-house workshop
+          services &mdash; parts fitting, body repair and spray paint. Please read them
+          carefully. By using this website, requesting a quote, placing an order or asking us to
+          carry out work, you agree to these Terms.
+        </p>
+        <p>
+          Please note this website is a demonstration site. The business details below are
+          genuine, but some online features (such as forms) may direct you to contact us by
+          phone, WhatsApp or email rather than completing a transaction through the site itself.
+        </p>
+
+        <h2>About these terms</h2>
+        <p>
+          These Terms apply to your use of this website and to any enquiry, quote, order or work
+          you ask us to provide. They should be read alongside our
+          <a href="/privacy-policy">Privacy Policy</a> and <a href="/cookie-policy">Cookie
+          Policy</a>, which explain how we handle your personal data and use cookies.
+        </p>
+        <p>
+          We may also agree specific arrangements with you in writing &mdash; for example, a
+          confirmed quote, an invoice or a trade account &mdash; for a particular order or job.
+          Where there is any conflict, the specific terms we confirm with you for that order or
+          job take precedence over these general Terms for that matter.
+        </p>
+        <p>
+          Nothing in these Terms affects your statutory rights as a consumer under UK law.
+        </p>
+
+        <h2>Using this website</h2>
+        <p>
+          We provide this website to share information about our parts, our workshop services and
+          how to reach us. We work to keep the information accurate and up to date, but we give
+          no guarantee that the content is complete, current or error-free, and the site is
+          provided on an &ldquo;as available&rdquo; basis.
+        </p>
+        <p>
+          In return for using this website, you agree that you will:
+        </p>
+        <ul>
+          <li>use the site only for lawful purposes and in line with these Terms;</li>
+          <li>
+            not misuse the site by knowingly introducing viruses or other harmful material, or
+            attempting to gain unauthorised access to the site, its server or any connected
+            system;
+          </li>
+          <li>
+            not copy, reproduce or republish content from the site except as permitted under the
+            <a href="#intellectual-property">Intellectual property</a> section below.
+          </li>
+        </ul>
+        <p>
+          We may update, suspend, withdraw or restrict the availability of all or any part of
+          this website at any time without notice. We will not be liable if the site is
+          unavailable at any time or for any period.
+        </p>
+
+        <h2>Parts, quotes &amp; availability</h2>
+        <p>
+          We supply genuine and quality parts for a wide range of makes &mdash; including Lexus,
+          Mercedes-Benz, BMW, Audi, Tesla, Range Rover and Ford, among many others. All parts are
+          <strong>subject to availability</strong>. Where an item is not in stock, we will do our
+          best to source it for you, but we cannot guarantee that any particular part will be
+          available.
+        </p>
+        <p>
+          Any quotes or estimates we give you &mdash; whether for parts, fitting, body repair or
+          spray paint &mdash; are provided in good faith on the basis of the information you give
+          us at the time. Quotes and estimates are <strong>indicative only and are not binding
+          until confirmed by us</strong>. The final price may change if, for example, the vehicle
+          details turn out to differ, additional work or parts are needed, or supplier prices
+          change. We will let you know before carrying out work or supplying parts that fall
+          outside an agreed quote.
+        </p>
+        <p>
+          All prices are quoted in <strong>pounds sterling (&pound; GBP)</strong>. Unless we state
+          otherwise, prices, descriptions and images on this website and in any listing are for
+          guidance and do not form a binding offer. A contract is formed only once we confirm
+          your order or quote with you.
+        </p>
+        <p>
+          Vehicle parts must be correctly matched to your vehicle. We will always try to confirm
+          fitment from the make, model, year and other details you provide, so please give us
+          accurate information &mdash; including registration or VIN where relevant &mdash; so we
+          can supply the right part first time.
+        </p>
+
+        <h2>Orders &amp; delivery</h2>
+        <p>
+          You can order parts from us by phone, WhatsApp or email, and we will confirm price,
+          availability and how you would like to receive the part. We offer <strong>fast UK
+          delivery on stocked parts</strong>, with <strong>free shipping on orders over
+          &pound;80</strong>. You are also welcome to <strong>collect in person</strong> from our
+          unit on Chadwell Heath Industrial Park.
+        </p>
+        <p>
+          Many of our parts are also listed on our eBay store. If you order through eBay, the
+          relevant eBay terms and that platform&rsquo;s buyer protection also apply to your
+          purchase, in addition to these Terms where applicable. You can browse the store here:
+          <a href={site.ebayUrl} target="_blank" rel="noopener">our eBay store</a>.
+        </p>
+        <p>
+          Delivery timescales are estimates and are not guaranteed, as dispatch and carrier
+          timings can be affected by factors outside our control. Risk in the parts passes to you
+          on delivery or collection. Where you are a consumer, your statutory rights &mdash;
+          including in relation to faulty or misdescribed goods &mdash; are unaffected by these
+          Terms.
+        </p>
+
+        <h2>Workshop services</h2>
+        <p>
+          Alongside supplying parts, our in-house workshop provides <strong>parts fitting</strong>,
+          <strong>body repair</strong> and <strong>spray paint</strong> services. We will carry
+          out any work we agree to provide with <strong>reasonable care and skill</strong>, using
+          our experience built up over more than 15 years in the automotive trade.
+        </p>
+        <p>
+          Before we start work, we will agree with you what is to be done. Some jobs &mdash;
+          particularly body repair, accident damage and respray work &mdash; can only be fully
+          assessed once work is under way; if we find that additional parts or work are needed, we
+          will discuss this with you before going ahead so you can decide how to proceed.
+        </p>
+        <p>
+          So that we can plan the work, please contact us in advance to book a vehicle in rather
+          than arriving unannounced. You are responsible for removing personal belongings from the
+          vehicle before any work; we cannot accept responsibility for items left inside it.
+        </p>
+        <p>
+          Where parts you supply yourself are fitted at your request, our responsibility is
+          limited to the fitting work we carry out, and not to the quality, suitability or
+          performance of parts we did not supply.
+        </p>
+
+        <h2 id="intellectual-property">Intellectual property</h2>
+        <p>
+          Unless otherwise stated, the content of this website &mdash; including the text,
+          graphics, layout, design, the <strong>{site.name}</strong> name and logo, and the
+          arrangement of all of these &mdash; is owned by or licensed to us and is protected by
+          intellectual property laws.
+        </p>
+        <p>
+          You may view, download and print extracts from this website for your own personal,
+          non-commercial use in connection with a genuine interest in our parts and services. You
+          must not otherwise copy, reproduce, republish, distribute or commercially exploit any
+          part of this website without our prior written permission.
+        </p>
+        <p>
+          Vehicle manufacturer names, brand names and trade marks referred to on this website are
+          the property of their respective owners and are used only to describe the vehicles for
+          which parts and services are offered. Their use does not imply any affiliation with, or
+          endorsement by, those manufacturers.
+        </p>
+
+        <h2>Limitation of liability</h2>
+        <p>
+          <strong>Nothing in these Terms excludes or limits our liability where it would be
+          unlawful to do so.</strong> In particular, we do not exclude or limit our liability for
+          death or personal injury caused by our negligence, for fraud or fraudulent
+          misrepresentation, or for any other liability that cannot be excluded or limited under
+          applicable law &mdash; including your statutory rights as a consumer.
+        </p>
+        <p>
+          Subject to that, we will not be liable for any loss or damage that is not a foreseeable
+          result of our breach of these Terms or of our negligence, nor for any business losses,
+          as our parts and services are supplied for your own private and domestic use unless we
+          have expressly agreed otherwise (for example, under a trade arrangement).
+        </p>
+        <p>
+          We are not responsible for any failure or delay in performing our obligations where
+          this is caused by events outside our reasonable control, such as supplier or carrier
+          delays, shortages of parts, or other circumstances beyond our control.
+        </p>
+
+        <h2>Links to third-party sites</h2>
+        <p>
+          This website may contain links to third-party websites and resources &mdash; for
+          example, our <a href={site.ebayUrl} target="_blank" rel="noopener">eBay store</a>, map
+          and directions services, or messaging platforms such as WhatsApp. These links are
+          provided for your convenience only.
+        </p>
+        <p>
+          We have no control over the content, policies or availability of third-party sites and
+          we do not endorse them or accept responsibility for them or for any loss or damage that
+          may arise from your use of them. Your use of any third-party site is subject to that
+          site&rsquo;s own terms and privacy practices, which we encourage you to review.
+        </p>
+
+        <h2>Changes to these terms</h2>
+        <p>
+          We may update these Terms from time to time to reflect changes in our services, our
+          practices or the law. Any changes will be posted on this page with a revised
+          &ldquo;last updated&rdquo; date, and they take effect from the date they are posted. We
+          encourage you to review this page periodically. By continuing to use the website or our
+          services after a change, you accept the updated Terms. These Terms were last updated on
+          <strong>{lastUpdated}</strong>.
+        </p>
+
+        <h2>Governing law</h2>
+        <p>
+          These Terms, their subject matter and their formation are governed by the laws of
+          <strong>England &amp; Wales</strong>. You and we both agree that the courts of England
+          &amp; Wales will have jurisdiction over any dispute or claim arising out of or in
+          connection with these Terms or our parts and services. If you are a consumer resident
+          elsewhere in the UK, you may also be able to bring proceedings in your local courts, and
+          nothing here affects your rights under mandatory local law.
+        </p>
+
+        <h2 id="contact-us">Contact us</h2>
+        <p>
+          If you have any questions about these Terms, an order, a quote or any work we have
+          carried out, please get in touch &mdash; we are happy to help:
+        </p>
+        <ul>
+          <li><strong>Business:</strong> {site.name}</li>
+          <li><strong>Email:</strong> <a href={mailLink}>{site.email}</a></li>
+          <li><strong>Landline:</strong> <a href={telLandline}>{site.phoneLandline}</a> &mdash; office &amp; trade</li>
+          <li><strong>Mobile / WhatsApp:</strong> <a href={telMobile}>{site.phoneMobile}</a> &mdash; direct &amp; quick</li>
+          <li><strong>Post:</strong> {postal}</li>
+        </ul>
+        <p>
+          Our opening hours are Monday to Friday, 8:30am&ndash;5:30pm, and Saturday,
+          8:30am&ndash;12:30pm. We are closed on Sundays.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

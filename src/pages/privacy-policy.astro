@@ -1,0 +1,264 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, mailLink, telLandline, telMobile } from '../data/site';
+
+const lastUpdated = '2 June 2026';
+const addr = site.address;
+const postal = `${site.name}, ${addr.unit}, ${addr.estate}, ${addr.street}, ${addr.area}, ${addr.city}, ${addr.region} ${addr.postcode}`;
+---
+
+<Layout
+  current="/privacy-policy"
+  title="Privacy Policy | Major Car Parts"
+  description="How Major Car Parts collects, uses and protects your personal data under UK GDPR. Your rights and how to contact us."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Privacy Policy"
+    subtitle="How we handle your personal data."
+    crumb="Privacy Policy"
+  />
+
+  <section class="py-20 md:py-28 bg-white">
+    <div class="container-narrow">
+      <div class="legal-prose fade-in">
+        <p class="text-muted-light text-[0.85rem] uppercase tracking-[0.16em] font-mono mb-8">
+          Last updated: {lastUpdated}
+        </p>
+
+        <p>
+          This Privacy Policy explains how <strong>{site.name}</strong> (&ldquo;we&rdquo;,
+          &ldquo;us&rdquo; or &ldquo;our&rdquo;) collects, uses, shares and protects your
+          personal data when you contact us, request a quote, buy parts or use our fitting,
+          body repair and spray paint services. We are committed to handling your information
+          responsibly and in line with the UK General Data Protection Regulation (UK GDPR) and
+          the Data Protection Act 2018.
+        </p>
+        <p>
+          Please note this website is a demonstration site. The business details below are
+          genuine, but some online features (such as forms) may direct you to contact us by
+          phone, WhatsApp or email rather than submitting data through the site.
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          For the purposes of data protection law, <strong>{site.name}</strong> is the data
+          controller responsible for your personal data. You can reach us using the details
+          below:
+        </p>
+        <ul>
+          <li><strong>Business:</strong> {site.name}</li>
+          <li>
+            <strong>Address:</strong> {addr.unit}, {addr.estate}, {addr.street},
+            {addr.area}, {addr.city}, {addr.region} {addr.postcode}
+          </li>
+          <li>
+            <strong>Email:</strong> <a href={mailLink}>{site.email}</a>
+          </li>
+          <li>
+            <strong>Landline:</strong> <a href={telLandline}>{site.phoneLandline}</a>
+          </li>
+          <li>
+            <strong>Mobile / WhatsApp:</strong> <a href={telMobile}>{site.phoneMobile}</a>
+          </li>
+        </ul>
+        <p>
+          If you have any questions about this policy or how we use your personal data, please
+          contact us using any of the methods above.
+        </p>
+
+        <h2>What information we collect</h2>
+        <p>
+          We only collect the information we need to respond to you and to supply the parts and
+          services you ask for. Depending on how you get in touch, this may include:
+        </p>
+        <ul>
+          <li>
+            <strong>Your contact details</strong> - your name, telephone number and email
+            address, so we can reply to your enquiry and keep you updated.
+          </li>
+          <li>
+            <strong>Vehicle details</strong> - information such as the make, model, year,
+            registration or VIN of your vehicle, so we can identify the correct parts or
+            quote for fitting, body repair or spray paint work.
+          </li>
+          <li>
+            <strong>The content of your enquiry</strong> - the message, photographs or part
+            details you send us by email, WhatsApp, phone or any quote request, including
+            anything you choose to tell us about the work you need.
+          </li>
+          <li>
+            <strong>Delivery and order details</strong> - where you purchase parts, the
+            address, items and any reference information needed to fulfil and dispatch your
+            order.
+          </li>
+          <li>
+            <strong>Basic website analytics</strong> - where you have given consent, limited
+            information about how you use this website (such as the pages you view and your
+            approximate region), collected through cookies. See <a href="/cookie-policy">our
+            Cookie Policy</a> for details.
+          </li>
+        </ul>
+        <p>
+          We do not intentionally collect any special category data (such as health
+          information) and we ask that you do not send us such information. We do not knowingly
+          collect data from children.
+        </p>
+
+        <h2>How we use it &amp; lawful basis</h2>
+        <p>
+          We use your personal data only for clear, legitimate purposes, and we always have a
+          lawful basis under the UK GDPR for doing so:
+        </p>
+        <ul>
+          <li>
+            <strong>To respond to your enquiries and provide quotes</strong> - answering your
+            questions about parts availability, pricing, fitting, body repair and spray paint.
+            Lawful basis: our <strong>legitimate interests</strong> in responding to and
+            helping potential and existing customers, and/or taking <strong>steps at your
+            request prior to entering into a contract</strong>.
+          </li>
+          <li>
+            <strong>To supply parts and carry out work</strong> - sourcing, ordering, fitting,
+            repairing, refinishing, delivering and invoicing. Lawful basis:
+            <strong>performance of a contract</strong> with you, or steps taken at your request
+            before entering into one.
+          </li>
+          <li>
+            <strong>To keep proper business records</strong> - for accounting, tax, warranty
+            and dispute-resolution purposes. Lawful basis: compliance with a
+            <strong>legal obligation</strong> and our legitimate interests in running the
+            business properly.
+          </li>
+          <li>
+            <strong>To improve and secure our website</strong> - using analytics and similar
+            technologies. Lawful basis: your <strong>consent</strong>, which you can give or
+            withdraw at any time through our cookie controls.
+          </li>
+        </ul>
+        <p>
+          We do not use your personal data for automated decision-making that produces legal or
+          similarly significant effects, and we will not send you marketing communications
+          unless you have asked us to or otherwise agreed to receive them.
+        </p>
+
+        <h2>Cookies</h2>
+        <p>
+          Our website uses a small number of cookies. Essential cookies help the site work and
+          remember your preferences; optional analytics cookies are only set if you consent.
+          You can manage your choices at any time. For full details of the cookies we use and
+          how to control them, please see our <a href="/cookie-policy">Cookie Policy</a>.
+        </p>
+
+        <h2>Sharing your information</h2>
+        <p>
+          <strong>We do not sell your personal data, and we never share it for third-party
+          marketing.</strong> We only share information where it is necessary to provide our
+          parts and services, or where we are required to by law. This may include:
+        </p>
+        <ul>
+          <li>
+            <strong>Delivery and courier providers</strong> - to dispatch parts to you, where
+            relevant.
+          </li>
+          <li>
+            <strong>Payment providers</strong> - to process payments securely. We do not store
+            full card details ourselves.
+          </li>
+          <li>
+            <strong>Suppliers and manufacturers</strong> - only where needed to source a
+            specific part or honour a warranty.
+          </li>
+          <li>
+            <strong>Professional advisers and authorities</strong> - such as our accountants,
+            or HMRC and other bodies, where we are legally required to disclose information.
+          </li>
+        </ul>
+        <p>
+          Where we use service providers, we only share the minimum information needed and
+          expect them to keep your data secure and use it solely for the purpose we have
+          engaged them for.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <p>
+          We keep your personal data only for as long as we need it for the purposes set out in
+          this policy:
+        </p>
+        <ul>
+          <li>
+            <strong>General enquiries</strong> that do not lead to an order are typically kept
+            for a short period and then deleted or anonymised.
+          </li>
+          <li>
+            <strong>Order, sales and service records</strong> are kept for as long as required
+            to meet our legal, accounting, tax and warranty obligations, generally for several
+            years after the work or sale is complete.
+          </li>
+        </ul>
+        <p>
+          When we no longer need your personal data, we will securely delete or anonymise it.
+        </p>
+
+        <h2>Your rights</h2>
+        <p>
+          Under the UK GDPR you have a number of rights over your personal data. You have the
+          right to:
+        </p>
+        <ul>
+          <li><strong>Access</strong> - request a copy of the personal data we hold about you.</li>
+          <li><strong>Rectification</strong> - ask us to correct data that is inaccurate or incomplete.</li>
+          <li><strong>Erasure</strong> - ask us to delete your personal data in certain circumstances.</li>
+          <li><strong>Restriction</strong> - ask us to limit how we use your data in certain circumstances.</li>
+          <li><strong>Objection</strong> - object to our processing of your data based on legitimate interests.</li>
+          <li><strong>Portability</strong> - request that certain data be transferred to you or another provider.</li>
+          <li><strong>Withdraw consent</strong> - where we rely on your consent, withdraw it at any time (this does not affect processing already carried out).</li>
+        </ul>
+        <p>
+          To exercise any of these rights, please contact us using the details in the
+          <a href="#contact-us">&ldquo;Contact us&rdquo;</a> section below. We will respond
+          within the timeframes required by law and there is normally no charge.
+        </p>
+        <p>
+          If you are unhappy with how we have handled your personal data, you have the right to
+          complain to the Information Commissioner&rsquo;s Office (ICO), the UK&rsquo;s data
+          protection regulator. You can contact the ICO at
+          <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a>. We would,
+          however, appreciate the chance to address your concerns first, so please do consider
+          contacting us before approaching the ICO.
+        </p>
+
+        <h2>Data security</h2>
+        <p>
+          We take appropriate technical and organisational measures to protect your personal
+          data against loss, misuse, unauthorised access, disclosure or alteration. Access to
+          the information you share with us is limited to those who need it to deal with your
+          enquiry or order. While no method of transmission or storage is ever completely
+          secure, we work to keep your data safe and to deal promptly with any issues that
+          arise.
+        </p>
+
+        <h2>Changes to this policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time to reflect changes in our
+          practices, our services or the law. Any changes will be posted on this page with a
+          revised &ldquo;last updated&rdquo; date. We encourage you to review this page
+          periodically. This policy was last updated on <strong>{lastUpdated}</strong>.
+        </p>
+
+        <h2 id="contact-us">Contact us</h2>
+        <p>
+          If you have any questions about this Privacy Policy, wish to exercise your rights, or
+          want to raise a concern about how we handle your personal data, please get in touch:
+        </p>
+        <ul>
+          <li><strong>Email:</strong> <a href={mailLink}>{site.email}</a></li>
+          <li><strong>Landline:</strong> <a href={telLandline}>{site.phoneLandline}</a></li>
+          <li><strong>Mobile / WhatsApp:</strong> <a href={telMobile}>{site.phoneMobile}</a></li>
+          <li><strong>Post:</strong> {postal}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>

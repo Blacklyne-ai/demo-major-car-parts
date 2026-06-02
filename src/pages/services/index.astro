@@ -1,0 +1,164 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import ReviewsSection from '../../components/ReviewsSection.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services, workshopServices } from '../../data/services';
+import { site, telMobile, whatsappLink } from '../../data/site';
+
+// Just the first three "includes" per workshop service for the deep-dive ticked lists.
+const oneRoof = [
+  { title: 'Buy & fit', body: 'Buy the part and have it fitted in the same visit.', icon: 'Wrench' },
+  { title: 'Repair & paint', body: 'Bodywork put right, then refinished in our booth.', icon: 'PaintBucket' },
+  { title: 'One bill', body: 'Parts and labour settled together — no chasing two firms.', icon: 'Receipt' },
+];
+---
+
+<Layout
+  current="/services"
+  title="Our Services — Parts Fitting, Body Repair & Spray Paint | Major Car Parts"
+  description="In-house car services in Chadwell Heath: parts fitting, body repair and spray paint. Buy the part and have it fitted under one roof. Call 020 3592 1629."
+>
+  <!-- ════════ HERO ════════ -->
+  <PageHero
+    eyebrow="Parts + workshop, one roof"
+    title="Supplied, fitted, repaired and painted — by one team."
+    subtitle="Most parts suppliers stop at the counter. We don't. Buy the part from us and our in-house workshop fits it, repairs the bodywork around it and refinishes it — so you make one trip instead of three."
+    image="/images/stock/garage-2.jpg"
+    crumb="Services"
+    primary={{ href: '/contact', label: 'Get a Quote' }}
+    secondary={{ href: '/parts', label: 'Browse parts' }}
+  />
+
+  <!-- ════════ INTRO — THE USP ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">The one-roof advantage</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Sell, fit, repair and paint — all in the same place.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-6 text-pretty">
+            Order a bumper or a panel from most suppliers and you're then on your own — hunting for a garage to fit it, a bodyshop to straighten the damage and a sprayer to match the colour. Three firms, three trips, three bills, and nobody quite owning the result.
+          </p>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            We do the lot. With over 15 years in the automotive trade and a full in-house workshop on Chadwell Heath Industrial Park, the people who supply the part are the people who finish the job — across premium, mainstream and EV makes alike.
+          </p>
+          <div class="grid sm:grid-cols-3 gap-3 mb-8">
+            {oneRoof.map((o, i) => (
+              <div class={`tile fade-in stagger-${i + 1}`}>
+                <span class="tile-icon tile-icon-orange mb-3"><Icon name={o.icon} size={20} strokeWidth={2} /></span>
+                <p class="font-bold text-ink text-[0.98rem] mb-1">{o.title}</p>
+                <p class="text-muted text-[0.85rem] leading-relaxed">{o.body}</p>
+              </div>
+            ))}
+          </div>
+          <a href="/about" class="arrow-link">More about Major Car Parts</a>
+        </div>
+
+        <div class="relative fade-in stagger-1">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img src="/images/workshop-engine.jpg" alt="Our in-house team working on a vehicle in the workshop" width="1100" height="825" class="w-full aspect-[4/3] object-cover" loading="lazy" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(0,18,43,0.45) 100%);"></div>
+          </div>
+          <div class="absolute -bottom-6 -left-2 md:left-6 glass-light rounded-2xl px-6 py-5 max-w-[16rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-orange-deep font-mono mb-1.5">Under one roof</p>
+            <p class="font-bold text-ink text-[1.05rem] leading-snug">Parts, fitting, body repair &amp; spray paint — one team, one trip.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SERVICES GRID ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="What we do"
+        title="Four ways we keep you moving."
+        intro="Supply the part, fit it, repair the bodywork and refinish it. Pick one or have us see the whole job through — it's the same team either way."
+        ctaHref="/contact"
+        ctaLabel="Get a Quote"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        {services.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WORKSHOP DEEP DIVE ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="max-w-2xl mb-16 fade-in">
+        <span class="eyebrow mb-5">Inside the workshop</span>
+        <h2 class="heading-lg text-balance mt-1 mb-4">The three things we do once the part is in stock.</h2>
+        <p class="text-lg text-muted text-pretty">Fitting, body repair and spray paint — each handled in-house, and each flowing into the next so a repair can be straightened, fitted and refinished without ever leaving the estate.</p>
+      </div>
+
+      <div class="space-y-20 md:space-y-28">
+        {workshopServices.map((s, i) => (
+          <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <!-- Image — alternates side on lg via order -->
+            <div class={`relative fade-in ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+                <img src={s.image} alt={`${s.title} at Major Car Parts`} width="1100" height="825" class="w-full aspect-[4/3] object-cover" loading="lazy" decoding="async" />
+                <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 60%, rgba(0,18,43,0.4) 100%);"></div>
+                <span class="absolute top-5 left-5 pill pill-dark"><Icon name={s.icon} size={13} strokeWidth={2.4} class="text-orange-bright" />{s.eyebrow}</span>
+              </div>
+            </div>
+
+            <!-- Text -->
+            <div class={`fade-in stagger-1 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+              <div class="flex items-center gap-3 mb-4">
+                <span class="tile-icon tile-icon-orange"><Icon name={s.icon} size={22} strokeWidth={2} /></span>
+                <span class="text-[0.72rem] uppercase tracking-[0.2em] text-muted font-mono">0{i + 1} / Workshop</span>
+              </div>
+              <h3 class="heading-md text-balance mb-4">{s.title}</h3>
+              <p class="text-lg text-muted leading-relaxed mb-6 text-pretty">{s.lead}</p>
+              <ul class="space-y-3 mb-8">
+                {s.includes.slice(0, 4).map((item) => (
+                  <li class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0 mt-0.5"><Icon name="Check" size={14} strokeWidth={3} /></span>
+                    <span class="text-ink font-medium text-[0.96rem] leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href={s.href} class="arrow-link">Learn more about {s.title}</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PROCESS (dark) ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; bottom: -150px; right: -100px; background: #FF5500; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">How it works</span>
+        <h2 class="heading-lg text-white text-balance mt-1">From enquiry to back on the road.</h2>
+        <p class="text-lg text-white/70 mt-4 text-pretty">One conversation kicks it off — tell us the vehicle and what you need, and we take it from sourcing to finished work.</p>
+      </div>
+      <ProcessSteps dark={true} />
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mt-12 fade-in stagger-2">
+        <a href={telMobile} class="btn btn-light btn-lg">
+          <Icon name="Phone" size={17} strokeWidth={2.3} />
+          {site.phoneMobile}
+        </a>
+        <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-glass btn-lg">
+          <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+          Message us on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ REVIEWS (dark) ════════ -->
+  <ReviewsSection dark={true} />
+
+  <CtaBand />
+</Layout>

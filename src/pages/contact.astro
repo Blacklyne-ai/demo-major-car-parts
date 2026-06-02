@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ContactMethods from '../components/ContactMethods.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import MapBlock from '../components/MapBlock.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { site, telLandline, telMobile, mailLink, whatsappLink } from '../data/site';
+
+// Quick "at a glance" rail under the hero — the four ways to reach us.
+const quickWays = [
+  { icon: 'Phone', label: 'Landline', value: site.phoneLandline, sub: 'Office & trade', href: telLandline },
+  { icon: 'Phone', label: 'Mobile', value: site.phoneMobile, sub: 'Direct & quick', href: telMobile },
+  { icon: 'MessageCircle', label: 'WhatsApp', value: 'Message us', sub: 'Make & model', href: whatsappLink, external: true },
+  { icon: 'Mail', label: 'Email', value: site.email, sub: 'Reply with a quote', href: mailLink, breakAll: true },
+];
+---
+
+<Layout
+  current="/contact"
+  title="Contact Major Car Parts — Call, WhatsApp or Visit | Chadwell Heath RM8 1SL"
+  description="Contact Major Car Parts, Chadwell Heath. Call 020 3592 1629 or 078 8633 4136, WhatsApp or email, or visit Kemp Road, RM8 1SL."
+>
+  <PageHero
+    eyebrow="Get in touch"
+    title="Talk to Major Car Parts."
+    crumb="Contact"
+    subtitle="Two numbers, two audiences. Ring the landline for the office and trade enquiries — accounts, stock and bigger jobs. Ring the mobile for a quick, direct answer on a part or a quote. Or message us on WhatsApp and email any time."
+    primary={{ href: telLandline, label: `Call ${site.phoneLandline}` }}
+    secondary={{ href: whatsappLink, label: 'WhatsApp us' }}
+  />
+
+  <!-- ════════ QUICK CONTACT RAIL ════════ -->
+  <section class="bg-white border-b border-line">
+    <div class="container-mcp">
+      <div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-line">
+        {quickWays.map((w, i) => (
+          <a
+            href={w.href}
+            target={w.external ? '_blank' : undefined}
+            rel={w.external ? 'noopener' : undefined}
+            class={`group flex items-center gap-4 px-5 py-6 md:px-7 md:py-7 transition hover:bg-snow fade-in stagger-${i + 1}`}
+          >
+            <span class="w-12 h-12 rounded-2xl bg-orange/10 text-orange-deep inline-flex items-center justify-center flex-shrink-0 transition group-hover:bg-orange group-hover:text-white">
+              <Icon name={w.icon} size={20} strokeWidth={2} />
+            </span>
+            <div class="min-w-0">
+              <p class="text-[0.66rem] uppercase tracking-[0.16em] text-muted font-mono mb-1">{w.label}</p>
+              <p class={`font-bold text-ink leading-tight ${w.breakAll ? 'break-all text-[0.9rem]' : 'text-[0.98rem]'}`}>{w.value}</p>
+              <p class="text-[0.78rem] text-muted-light mt-0.5">{w.sub}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CONTACT METHODS + OPENING HOURS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="How to reach us"
+        title="Pick the way that suits you."
+        intro="Phone, WhatsApp, email or walk in. We’re open Monday to Friday, with a Saturday morning that’s handy for private customers who can’t get in during the week. Closed Sundays."
+      />
+
+      <div class="grid lg:grid-cols-5 gap-8 lg:gap-10 mt-12 items-start">
+        <div class="lg:col-span-3">
+          <ContactMethods />
+
+          <div class="card !p-6 md:!p-7 mt-3.5 fade-in stagger-2">
+            <div class="flex items-start gap-4">
+              <span class="tile-icon tile-icon-orange flex-shrink-0"><Icon name="Store" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono text-muted mb-1.5">Buy online</p>
+                <p class="text-ink leading-relaxed text-[0.95rem] text-pretty mb-3">
+                  Hundreds of parts are listed on our eBay store with a {site.rating.positive} positive rating across {site.stats.ebayReviewCount.toLocaleString('en-GB')} verified buyer reviews — order with fast UK delivery, or message us first to check fitment.
+                </p>
+                <a href={site.ebayUrl} target="_blank" rel="noopener" class="arrow-link">Visit our eBay store</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 fade-in stagger-1">
+          <OpeningHours />
+          <p class="text-[0.82rem] text-muted-light leading-relaxed mt-4 px-1 flex items-start gap-2 text-pretty">
+            <Icon name="Info" size={14} strokeWidth={2.2} class="text-orange-deep flex-shrink-0 mt-0.5" />
+            Planning to drop a vehicle in for fitting, body repair or spray paint? Give us a call first so we can book you in.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ QUOTE FORM + ADDRESS ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">Where to find us</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">Drop in, drop off, or send the details over.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+            We’re on a trade-friendly industrial estate in Chadwell Heath, East London — easy to reach and built for pulling in, dropping off and collecting.
+          </p>
+
+          <div class="card !p-6 md:!p-7 mb-4">
+            <div class="flex items-start gap-4">
+              <span class="tile-icon tile-icon-orange flex-shrink-0"><Icon name="MapPin" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono text-muted mb-1.5">Our address</p>
+                <address class="not-italic text-ink leading-relaxed">
+                  <span class="font-semibold">{site.name}</span><br />
+                  {site.address.unit}, {site.address.estate}<br />
+                  {site.address.street}, {site.address.city}<br />
+                  {site.address.region} <span class="font-mono font-semibold">{site.address.postcode}</span>
+                </address>
+              </div>
+            </div>
+          </div>
+
+          <div class="card !p-6 md:!p-7">
+            <div class="flex items-start gap-4">
+              <span class="tile-icon flex-shrink-0"><Icon name="Navigation" size={22} strokeWidth={2} /></span>
+              <div>
+                <p class="text-[0.7rem] uppercase tracking-[0.14em] font-mono text-muted mb-1.5">How to find us</p>
+                <p class="text-ink leading-relaxed text-[0.95rem] text-pretty">
+                  Head into Chadwell Heath Industrial Park off Kemp Road and follow the units round to <span class="font-semibold">K2 / K3</span> — there’s space to park, pull in and unload. If in doubt, ring the mobile when you arrive and we’ll point you in.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 mt-5">
+                  <a href={site.googleDirectionsUrl} target="_blank" rel="noopener" class="btn btn-navy btn-sm">
+                    <Icon name="Navigation" size={15} strokeWidth={2.2} />
+                    Get directions
+                  </a>
+                  <a href={telMobile} class="btn btn-outline btn-sm">
+                    <Icon name="Phone" size={15} strokeWidth={2.2} />
+                    Call on arrival
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:pt-1">
+          <QuoteForm />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FIND US — MAP ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <MapBlock />
+    </div>
+  </section>
+</Layout>

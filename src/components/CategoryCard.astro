@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+import type { PartCategory } from '../data/parts';
+interface Props { category: PartCategory; index?: number; href?: string; }
+const { category, index = 0, href = '/parts' } = Astro.props;
+---
+<a href={href} class="part-card group fade-in" aria-label={category.name}>
+  <div class="part-media">
+    <img src={category.image} alt={category.name} width="800" height="600" loading={index < 3 ? 'eager' : 'lazy'} decoding="async" />
+    <span class="absolute top-3 left-3 w-11 h-11 rounded-xl inline-flex items-center justify-center" style="background: linear-gradient(180deg, rgba(0,45,98,0.92), rgba(0,28,64,0.92)); color:#FF6B1F; border:1px solid rgba(255,255,255,0.14); backdrop-filter: blur(6px);">
+      <Icon name={category.icon} size={20} strokeWidth={2} />
+    </span>
+  </div>
+  <div class="p-5 flex flex-col flex-1">
+    <h3 class="font-bold text-ink text-[1.02rem] mb-1.5 group-hover:text-orange-deep transition-colors">{category.name}</h3>
+    <p class="text-muted text-[0.88rem] leading-relaxed flex-1">{category.blurb}</p>
+    <span class="mt-4 inline-flex items-center gap-1.5 text-[0.82rem] font-semibold text-orange-deep">
+      View parts
+      <Icon name="ArrowRight" size={14} strokeWidth={2.4} class="transition-transform group-hover:translate-x-1" />
+    </span>
+  </div>
+</a>
