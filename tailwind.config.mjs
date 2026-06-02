@@ -33,8 +33,9 @@ export default {
         amber: 'rgb(var(--rgb-amber) / <alpha-value>)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-        display: ['Archivo', 'Inter', 'system-ui', 'sans-serif'],
+        // Matches the original site: Unbounded headings, Helvetica/Arial body.
+        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'system-ui', 'sans-serif'],
+        display: ['Unbounded', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', '"SF Mono"', 'monospace'],
       },
       borderRadius: {

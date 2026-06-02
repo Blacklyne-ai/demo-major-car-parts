@@ -46,4 +46,10 @@ This is a static site (no server). The quote/enquiry form composes a pre-filled 
 ## Legal pages
 Privacy, Cookie and Terms pages are professional UK GDPR/PECR/England-&-Wales drafts using the real business details. They deliberately contain **no** invented company-registration, VAT or ICO numbers. **Operator: have these reviewed and add your registration details before relying on them.**
 
+## Typography: matched to the original site (Unbounded)
+The brief suggested Archivo + Inter, but the real majorcarparts.co.uk theme uses **`Unbounded`** for headings (its distinctive brand display font) with a **Helvetica/Arial** body. Per operator feedback ("the font isn't the old site's"), the site now uses **Unbounded headings + Helvetica/Arial body** to match the original brand. Heading sizes/weights/tracking were tuned down because Unbounded is a wider, rounded face.
+
+## Buttons: flat & slim (not glossy)
+Per operator feedback ("buttons look like 2010"), buttons were rebuilt **flat**: solid brand-colour fills, no vertical gloss gradient, no bevel/inset highlight, no shimmer sweep, minimal shadow, slimmer padding and a subtle 1px hover lift — a clean 2027 look.
+
 _Last updated: 2 June 2026._
